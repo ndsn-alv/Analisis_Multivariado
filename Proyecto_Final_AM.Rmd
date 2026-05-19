@@ -16,6 +16,10 @@ knitr::opts_chunk$set(
 
 # 1. Introducción
 
+
+
+elelelelelelelelelel
+
 ## 1.1. Contexto
 
 ## 1.2. Objetivo general
