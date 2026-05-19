@@ -1,0 +1,50 @@
+---
+title: "Análisis estadístico de interrupciones legales del embarazo (ILE) utilizando métodos multivariados"
+author: "Nicolás de Silva Nacenta, José Manuel Bragado Villegas, Edwin Alexander Bravo García"
+date: "5 de junio de 2026"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  warning = FALSE,
+  message = FALSE
+)
+
+```
+
+# 1. Introducción
+
+## 1.1. Contexto
+
+## 1.2. Objetivo general
+
+## 1.3. Objetivos específicos
+
+# 2. Descripción de los datos
+
+## 2.1. Vistazo de los datos
+
+
+## 2.2. Descripción y tipos de variables
+
+# 3. Metodología
+
+## 3.2. Limpieza e imputación de los datos
+
+## 3.3 Análisis descriptivo
+
+### 3.3.1. Estadísticos descriptivos
+
+### 3.3.2. Visualización
+
+## 3.4. Análisis exploratorio de datos
+
+# 4. Resultados 
+
+# 5. Discusión
+
+# 6. Conclusiones
+
+# 7. Limitaciones
