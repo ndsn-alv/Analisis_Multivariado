@@ -12,39 +12,186 @@ knitr::opts_chunk$set(
   message = FALSE
 )
 
+library(dplyr)
+library(corrplot)
+library(knitr)
+library(ggplot2)
+library(dplyr)
+library(expm)
+library(ggrepel)
+library(tidyr)
+library(GGally)
+
+
 ```
 
 # 1. Introducción
 
-## 1.1. Contexto
+## 1.1. Objetivo general
 
-## 1.2. Objetivo general
-
-## 1.3. Objetivos específicos
+## 1.2. Objetivos específicos
 
 # 2. Descripción de los datos
 
-## 2.1. Vistazo de los datos
+```{r}
+ile <- read.csv("https://raw.githubusercontent.com/ndsn-alv/Analisis_Multivariado/main/Data/ile_2023_c1.csv")
 
+ile_imp <- read.csv("https://raw.githubusercontent.com/ndsn-alv/Analisis_Multivariado/main/Data/ile_imp.csv")
+ile_imp <- ile_imp[,-1]
 
-## 2.2. Descripción y tipos de variables
+# Obtener nombres de variables en común
+vars_comunes <- intersect(names(ile), names(ile_imp))
+
+# Reemplazar en bloque
+ile[vars_comunes] <- ile_imp[vars_comunes]
+
+```
+
+Se tienen 17730 observaciones de 42 variables y tres tipos de variables:
+
+**Numéricas**:  
+- *anio*: Año del procedimiento  
+- *edad*: Edad  
+- *edad_primera_menstruacion*: Edad de la primera menstruación  
+- *edad_inicio_vida_sexual*: Edad de inicio de vida sexual activa  
+- *semanas_embarazo*: Semanas de embarazo por fecha de ultima menstruacion
+- *numero_hijos*: Número de hijos  
+- *numero_embarazos*: Número de embarazos  
+- *numero_abortos*: Número de abortos  
+- *numero_partos*: Número de partos  
+- *numero_cesareas*: Número de cesáreas  
+- *numero_iles*: Número de ILE previas  
+- *numero_consultas*: Número de consultas previas  
+- *semanas_gestacion_usg*: Semanas de gestación por USG  
+- *dias_gestacion_usg*: Días de gestación por USG  
+
+**Categóricas**:  
+- *mes*: Mes del procedimiento  
+- *referida*: Indica si la paciente fue referida  
+- *estado_civil*: Estado civil de la paciente  
+- *institucion_derechohab*: Institución de derechohabiencia  
+- *nivel_edu*: Nivel educativo  
+- *ocupacion*: Ocupación  
+- *religion*: Religión  
+- *parentesco*: Parentesco del responsable  
+- *entidad*: Entidad de residencia  
+- *alcaldia* / *municipio*: Ubicación de residencia  
+- *recibio_consejeria*: Si recibió consejería  
+- *uso_anticonceptivo*: Uso habitual de anticonceptivos  
+- *motivos_interrupcion*: Motivo de la ILE  
+- *desc_servicio*: Servicio donde se realizó  
+- *firma_consentimiento*: Firma de consentimiento informado  
+- *se_complica*: Presencia de complicaciones  
+- *con_dolor*: Dolor posterior al procedimiento  
+- *analgesico*: Prescripción de analgésico  
+- *anticonceptivo_post*: Anticonceptivo posterior  
+- *resultado_ile*: Resultado del procedimiento  
+- *procedimiento_ile*: Tipo de procedimiento realizado  
+
+**Fechas**:  
+- *fecha_ingreso*: Fecha del procedimiento (ILE)  
+- *fecha_ultima_menstruacion*: Fecha de última menstruación  
+- *fecha_primera_valoracion*: Fecha de primera valoración médica  
+- *fecha_ingreso_hosp*: Fecha de ingreso hospitalario  
+- *fecha_egreso_hosp*: Fecha de egreso hospitalario  
+- *fecha_cierre*: Fecha de cierre del procedimiento  
+
+## 2.1. Selección de variables
+
+Utilizamos una versión de la base de datos imputada por el método de MICE. Sin embargo, no fue posible para todas las variables, en especial las que tiene formato de fecha o una gran cantidad de NAs. A continuación, se tiene el conteo de NAs por variable. 
+
+```{r}
+
+n_total <- nrow(ile)
+
+na_ile <- ile %>%
+  summarise(across(everything(), ~ sum(is.na(.)))) %>%
+  pivot_longer(everything(),
+               names_to = "Variable",
+               values_to = "Cantidad") %>%
+  arrange(desc(Cantidad)) %>%
+  mutate(Porcentaje = round(Cantidad / n_total * 100 , 2))
+
+kable(
+  na_ile,
+  Caption = "Frecuencia de NAs"
+)
+```
+
+A partir de ahora es necesario hacer una selección de variables.
+
+Las variables *fecha_cierre* y *resultado_ile* son completamente NAs. Las fechas ademas no ser relevantes para el análisis tienen una gran cantidad de NAs. Variables categoricas y numéricas con gran cantidad de NAs tambien se eliminan (*uso_anticonceptivo*, *anticonceptivo_post*, *desc_servicio*, *firma_consentimiento*, *semanas_embarazo* y *numero_consultas*). Se piensa hacer un análisis por entidad, por lo que variables como *alcaldia* y *municipio* estan de mas. Motivos de interrupción todas contienen el mismo valor (Interrupción voluntaria y 13 NAs) por lo que no es relevante, asi como *parentesco*, *recibio_consejeria* y *referida* tampoco nos interesa.
+
+Ahora, transformamos algunas variables. Por podemos calcular el numero total de dias de gestacion por ultrasonido multiplicando las semanas de gestacion por los 7 dias de la semana y sumarle los dias de gestacion (son valores entre 0 y 6). Por otro lado, la variable *numero_iles* cuenta el numero de veces que una mujer realizó una interrupción legal previa al procedimiento actual. Por lo que sumamos 1 a toda la columna para incluir la interrupción mas reciente.
+
+```{r}
+
+ile$dias_gestacion_usg <- ile$semanas_gestacion_usg * 7 + ile$dias_gestacion_usg
+
+ile <- ile[, !(names(ile) %in% c(
+  "fecha_cierre", "resultado_ile", "fecha_egreso_hosp",
+  "fecha_ingreso_hosp", "fecha_ultima_menstruacion",
+  "fecha_primera_valoracion", "fecha_ingreso",
+  "uso_anticonceptivo", "anticonceptivo_post",
+  "desc_servicio", "firma_consentimiento","semanas_embarazo",
+  "numero_consultas", "alcaldia", "municipio", "motivos_interrupcion", "parentesco", "referida", "recibio_consejeria", "semanas_gestacion_usg"
+))]
+```
 
 # 3. Metodología
 
-## 3.2. Limpieza e imputación de los datos
+## 3.1 Análisis descriptivo
 
-## 3.3 Análisis descriptivo
+```{r}
 
-### 3.3.1. Estadísticos descriptivos
+# Copia de trabajo
+df <- ile[, c(
+  "anio","mes","estado_civil","edad","institucion_derechohab",
+  "nivel_edu","ocupacion","religion","entidad",
+  "edad_primera_menstruacion","edad_inicio_vida_sexual",
+  "numero_hijos","numero_embarazos","numero_abortos",
+  "numero_partos","numero_cesareas","numero_iles",
+  "dias_gestacion_usg","se_complica","con_dolor",
+  "analgesico","procedimiento_ile"
+)]
 
-### 3.3.2. Visualización
+# Convertir a factor variables categóricas
+factores <- c("anio","mes","estado_civil","institucion_derechohab",
+              "nivel_edu","ocupacion","religion","entidad",
+              "se_complica","con_dolor","analgesico","procedimiento_ile")
 
-## 3.4. Análisis exploratorio de datos
+df[factores] <- lapply(df[factores], as.factor)
+
+num_vars <- c("edad","edad_primera_menstruacion","edad_inicio_vida_sexual",
+              "numero_hijos","numero_embarazos","numero_abortos",
+              "numero_partos","numero_cesareas","numero_iles",
+              "dias_gestacion_usg")
+
+cat_vars <- setdiff(names(df), num_vars)
+
+par(mfrow=c(3,4))
+for(v in num_vars){
+  hist(df[[v]], main=v, col="lightblue")
+}
+
+par(mfrow=c(3,4))
+for(v in cat_vars){
+  barplot(table(df[[v]]), main=v, las=2)
+}
+```
+
+## 3.2. Análisis de componentes principales (PCA)
+
+## 3.3. Análisis exploratorio de factores (EFA)
+
+## 3.4. Análisis de correspondencias (CA)
+
+## 3.5. Análisis de conglomerados (Clustering)
+
+## 3.6. Análisis de discriminantes (AC)
+
+## 3.7. Árboles de decisión
 
 # 4. Resultados 
 
-# 5. Discusión
-
-# 6. Conclusiones
-
-# 7. Limitaciones
+# 5. Conclusiones
