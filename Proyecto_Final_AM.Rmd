@@ -12,22 +12,111 @@ knitr::opts_chunk$set(
   message = FALSE
 )
 
+library(dplyr)
+library(corrplot)
+library(knitr)
+library(ggplot2)
+library(dplyr)
+library(expm)
+library(ggrepel)
+library(tidyr)
+library(GGally)
+
+
 ```
 
 # 1. Introducción
 
-## 1.1. Contexto
+## 1.1. Objetivo general
 
-## 1.2. Objetivo general
-
-## 1.3. Objetivos específicos
+## 1.2. Objetivos específicos
 
 # 2. Descripción de los datos
 
-## 2.1. Vistazo de los datos
+```{r}
+ile <- read.csv("https://raw.githubusercontent.com/ndsn-alv/Analisis_Multivariado/main/Data/ile_2023_c1.csv")
+
+ile_imp <- read.csv("https://raw.githubusercontent.com/ndsn-alv/Analisis_Multivariado/main/Data/ile_imp.csv")
+ile_imp <- ile_imp[,-1]
+
+# Obtener nombres de variables en común
+vars_comunes <- intersect(names(ile), names(ile_imp))
+
+# Reemplazar en bloque
+ile[vars_comunes] <- ile_imp[vars_comunes]
+
+```
+
+Se tienen 17730 observaciones de 42 variables y tres tipos de variables:
+
+**Numéricas**:  
+- *anio*: Año del procedimiento  
+- *edad*: Edad  
+- *edad_primera_menstruacion*: Edad de la primera menstruación  
+- *edad_inicio_vida_sexual*: Edad de inicio de vida sexual activa  
+- *semanas_embarazo*: Semanas de embarazo por fecha de ultima menstruacion
+- *numero_hijos*: Número de hijos  
+- *numero_embarazos*: Número de embarazos  
+- *numero_abortos*: Número de abortos  
+- *numero_partos*: Número de partos  
+- *numero_cesareas*: Número de cesáreas  
+- *numero_iles*: Número de ILE previas  
+- *numero_consultas*: Número de consultas previas  
+- *semanas_gestacion_usg*: Semanas de gestación por USG  
+- *dias_gestacion_usg*: Días de gestación por USG  
+
+**Categóricas**:  
+- *mes*: Mes del procedimiento  
+- *referida*: Indica si la paciente fue referida  
+- *estado_civil*: Estado civil de la paciente  
+- *institucion_derechohab*: Institución de derechohabiencia  
+- *nivel_edu*: Nivel educativo  
+- *ocupacion*: Ocupación  
+- *religion*: Religión  
+- *parentesco*: Parentesco del responsable  
+- *entidad*: Entidad de residencia  
+- *alcaldia* / *municipio*: Ubicación de residencia  
+- *recibio_consejeria*: Si recibió consejería  
+- *uso_anticonceptivo*: Uso habitual de anticonceptivos  
+- *motivos_interrupcion*: Motivo de la ILE  
+- *desc_servicio*: Servicio donde se realizó  
+- *firma_consentimiento*: Firma de consentimiento informado  
+- *se_complica*: Presencia de complicaciones  
+- *con_dolor*: Dolor posterior al procedimiento  
+- *analgesico*: Prescripción de analgésico  
+- *anticonceptivo_post*: Anticonceptivo posterior  
+- *resultado_ile*: Resultado del procedimiento  
+- *procedimiento_ile*: Tipo de procedimiento realizado  
+
+**Fechas**:  
+- *fecha_ingreso*: Fecha del procedimiento (ILE)  
+- *fecha_ultima_menstruacion*: Fecha de última menstruación  
+- *fecha_primera_valoracion*: Fecha de primera valoración médica  
+- *fecha_ingreso_hosp*: Fecha de ingreso hospitalario  
+- *fecha_egreso_hosp*: Fecha de egreso hospitalario  
+- *fecha_cierre*: Fecha de cierre del procedimiento  
+
+## 2.1. Selección de variables
+
+```{r}
+
+n_total <- nrow(ile)
+
+na_ile <- ile %>%
+  summarise(across(everything(), ~ sum(is.na(.)))) %>%
+  pivot_longer(everything(),
+               names_to = "Variable",
+               values_to = "Cantidad") %>%
+  arrange(desc(Cantidad)) %>%
+  mutate(Porcentaje = round(Cantidad / n_total * 100 , 2))
+
+kable(
+  na_ile,
+  Caption = "Frecuencia de NAs"
+)
+```
 
 
-## 2.2. Descripción y tipos de variables
 
 # 3. Metodología
 
