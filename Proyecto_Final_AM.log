@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.5.17)  27 MAY 2026 22:29
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.5.17)  31 MAY 2026 21:34
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -292,7 +292,99 @@ Package graphics Info: Driver file: pdftex.def on input line 106.
 \Gin@req@width=\dimen189
 )
 \pandoc@box=\box64
-(c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/bookmark/bookmark.sty
+(c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/multirow/multirow.sty
+Package: multirow 2024/11/12 v2.9 Span multiple rows of a table
+\multirow@colwidth=\skip64
+\multirow@cntb=\count314
+\multirow@dima=\skip65
+\bigstrutjot=\dimen190
+) (c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/wrapfig/wrapfig.sty
+\wrapoverhang=\dimen191
+\WF@size=\dimen192
+\c@WF@wrappedlines=\count315
+\WF@box=\box65
+\WF@everypar=\toks30
+Package: wrapfig 2003/01/31  v 3.6
+) (c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count316
+\float@exts=\toks31
+\float@box=\box66
+\@float@everytoks=\toks32
+\@floatcapt=\box67
+) (c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/colortbl/colortbl.sty
+Package: colortbl 2024/10/29 v1.0k Color table columns (DPC)
+\everycr=\toks33
+\minrowclearance=\skip66
+\rownum=\count317
+) (c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/pdflscape/pdflscape.sty
+Package: pdflscape 2025-06-23 v0.14 Display of landscape pages in PDF
+(c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/pdflscape/pdflscape-nometadata.sty
+Package: pdflscape-nometadata 2025-06-23 v0.14 Display of landscape pages in PDF (HO)
+(c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/lscape.sty
+Package: lscape 2020/05/28 v3.02 Landscape Pages (DPC)
+)
+Package pdflscape Info: Auto-detected driver: pdftex on input line 81.
+)) (c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tabu/tabu.sty
+Package: tabu 2019/01/11 v2.9 - flexible LaTeX tabulars (FC+tabu-fixed)
+(c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/varwidth/varwidth.sty
+Package: varwidth 2009/03/30 ver 0.92;  Variable-width minipages
+\@vwid@box=\box68
+\sift@deathcycles=\count318
+\@vwid@loff=\dimen193
+\@vwid@roff=\dimen194
+)
+==> First Aid for varwidth.sty applied!
+\c@taburow=\count319
+\tabu@nbcols=\count320
+\tabu@cnt=\count321
+\tabu@Xcol=\count322
+\tabu@alloc=\count323
+\tabu@nested=\count324
+\tabu@target=\dimen195
+\tabu@spreadtarget=\dimen196
+\tabu@naturalX=\dimen197
+\tabucolX=\dimen198
+\tabu@Xsum=\dimen199
+\extrarowdepth=\dimen256
+\abovetabulinesep=\dimen257
+\belowtabulinesep=\dimen258
+\tabustrutrule=\dimen259
+\tabu@thebody=\toks34
+\tabu@footnotes=\toks35
+\tabu@box=\box69
+\tabu@arstrutbox=\box70
+\tabu@hleads=\box71
+\tabu@vleads=\box72
+\tabu@cellskip=\skip67
+) (c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/threeparttable/threeparttable.sty
+Package: threeparttable 2003/06/13  v 3.0
+\@tempboxb=\box73
+) (c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/threeparttablex/threeparttablex.sty
+Package: threeparttablex 2013/07/23 v0.3 by daleif
+(c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/environ/environ.sty
+Package: environ 2014/05/04 v0.3 A new way to define environments
+(c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/trimspaces/trimspaces.sty
+Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
+))
+\TPTL@width=\skip68
+) (c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/ulem/ulem.sty
+\UL@box=\box74
+\UL@hyphenbox=\box75
+\UL@skip=\skip69
+\UL@hook=\toks36
+\UL@height=\dimen260
+\UL@pe=\count325
+\UL@pixel=\dimen261
+\ULC@box=\box76
+Package: ulem 2019/11/18
+\ULdepth=\dimen262
+) (c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/makecell/makecell.sty
+Package: makecell 2009/08/03 V0.1e Managing of Tab Column Heads and Cells
+\rotheadsize=\dimen263
+\c@nlinenum=\count326
+\TeXr@lab=\toks37
+) (c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/bookmark/bookmark.sty
 Package: bookmark 2023-12-10 v1.31 PDF bookmarks (HO)
 (c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref.sty
 Package: hyperref 2026-04-24 v7.01q Hypertext links for LaTeX
@@ -317,13 +409,13 @@ Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 ) (c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
-\c@section@level=\count314
+\c@section@level=\count327
 ) (c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/stringenc/stringenc.sty
 Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO)
 )
-\@linkdim=\dimen190
-\Hy@linkcounter=\count315
-\Hy@pagecounter=\count316
+\@linkdim=\dimen264
+\Hy@linkcounter=\count328
+\Hy@pagecounter=\count329
 (c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.def
 File: pd1enc.def 2026-04-24 v7.01q Hyperref: PDFDocEncoding definition (HO)
 Now handling font encoding PD1 ...
@@ -331,7 +423,7 @@ Now handling font encoding PD1 ...
 ) (c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/intcalc/intcalc.sty
 Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
 )
-\Hy@SavedSpaceFactor=\count317
+\Hy@SavedSpaceFactor=\count330
 (c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/puenc.def
 File: puenc.def 2026-04-24 v7.01q Hyperref: PDF Unicode definition (HO)
 Now handling font encoding PU ...
@@ -345,21 +437,21 @@ Package hyperref Info: Plain pages OFF on input line 4214.
 Package hyperref Info: Backreferencing OFF on input line 4219.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
 Package hyperref Info: Bookmarks ON on input line 4466.
-\c@Hy@tempcnt=\count318
+\c@Hy@tempcnt=\count331
 (c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip18
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
 LaTeX Info: Redefining \url on input line 4805.
-\XeTeXLinkMargin=\dimen191
+\XeTeXLinkMargin=\dimen265
 (c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/bitset/bitset.sty
 Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
 (c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty
 Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO)
 ))
-\Fld@menulength=\count319
-\Field@Width=\dimen192
-\Fld@charsize=\dimen193
+\Fld@menulength=\count332
+\Field@Width=\dimen266
+\Fld@charsize=\dimen267
 Package hyperref Info: Hyper figures OFF on input line 6091.
 Package hyperref Info: Link nesting OFF on input line 6096.
 Package hyperref Info: Hyper index ON on input line 6099.
@@ -367,15 +459,15 @@ Package hyperref Info: backreferencing OFF on input line 6106.
 Package hyperref Info: Link coloring OFF on input line 6111.
 Package hyperref Info: Link coloring with OCG OFF on input line 6116.
 Package hyperref Info: PDF/A mode OFF on input line 6121.
-\Hy@abspage=\count320
-\c@Item=\count321
-\c@Hfootnote=\count322
+\Hy@abspage=\count333
+\c@Item=\count334
+\c@Hfootnote=\count335
 )
 Package hyperref Info: Driver (autodetected): hpdftex.
 (c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/hpdftex.def
 File: hpdftex.def 2026-04-24 v7.01q Hyperref driver for pdfTeX
-\Fld@listcount=\count323
-\c@bookmark@seq@number=\count324
+\Fld@listcount=\count336
+\c@bookmark@seq@number=\count337
 (c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty
 Package: rerunfilecheck 2025-06-21 v1.11 Rerun checks for auxiliary files (HO)
 (c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/uniquecounter/uniquecounter.sty
@@ -383,38 +475,54 @@ Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
 )
 Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 284.
 )
-\Hy@SectionHShift=\skip64
+\Hy@SectionHShift=\skip70
 ) (c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/bookmark/bkm-pdftex.def
 File: bkm-pdftex.def 2023-12-10 v1.31 bookmark driver for pdfTeX and luaTeX (HO)
-\BKM@id=\count325
+\BKM@id=\count338
 ))
-LaTeX Font Info:    Trying to load font information for T1+lmr on input line 83.
+LaTeX Font Info:    Trying to load font information for T1+lmr on input line 97.
 (c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/t1lmr.fd
 File: t1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 ) (c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2026-02-18 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count326
-) (./Proyecto_Final_AM.aux)
+\l__color_backend_stack_int=\count339
+) (./Proyecto_Final_AM.aux
+
+LaTeX Warning: Label `tab:unnamed-chunk-4' multiply defined.
+
+
+LaTeX Warning: Label `tab:unnamed-chunk-4' multiply defined.
+
+
+LaTeX Warning: Label `tab:unnamed-chunk-4' multiply defined.
+
+
+LaTeX Warning: Label `tab:unnamed-chunk-4' multiply defined.
+
+
+LaTeX Warning: Label `tab:unnamed-chunk-4' multiply defined.
+
+)
 \openout1 = `Proyecto_Final_AM.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 83.
-LaTeX Font Info:    ... okay on input line 83.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 83.
-LaTeX Font Info:    ... okay on input line 83.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 83.
-LaTeX Font Info:    ... okay on input line 83.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 83.
-LaTeX Font Info:    ... okay on input line 83.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 83.
-LaTeX Font Info:    ... okay on input line 83.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 83.
-LaTeX Font Info:    ... okay on input line 83.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 83.
-LaTeX Font Info:    ... okay on input line 83.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 83.
-LaTeX Font Info:    ... okay on input line 83.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 83.
-LaTeX Font Info:    ... okay on input line 83.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 97.
+LaTeX Font Info:    ... okay on input line 97.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 97.
+LaTeX Font Info:    ... okay on input line 97.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 97.
+LaTeX Font Info:    ... okay on input line 97.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 97.
+LaTeX Font Info:    ... okay on input line 97.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 97.
+LaTeX Font Info:    ... okay on input line 97.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 97.
+LaTeX Font Info:    ... okay on input line 97.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 97.
+LaTeX Font Info:    ... okay on input line 97.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 97.
+LaTeX Font Info:    ... okay on input line 97.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 97.
+LaTeX Font Info:    ... okay on input line 97.
 (c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
@@ -455,15 +563,18 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-LaTeX Info: Redefining \microtypecontext on input line 83.
-Package microtype Info: Applying patch `item' on input line 83.
-Package microtype Info: Applying patch `toc' on input line 83.
-Package microtype Info: Applying patch `eqnum' on input line 83.
+Package microtype Info: Patching varwidth to enable character protrusion.
+\MT@vwid@leftmargin=\dimen268
+\MT@vwid@rightmargin=\dimen269
+LaTeX Info: Redefining \microtypecontext on input line 97.
+Package microtype Info: Applying patch `item' on input line 97.
+Package microtype Info: Applying patch `toc' on input line 97.
+Package microtype Info: Applying patch `eqnum' on input line 97.
 
-Package microtype Warning: Unable to apply patch `footnote' on input line 83.
+Package microtype Warning: Unable to apply patch `footnote' on input line 97.
 
-Package microtype Info: Applying patch `verbatim' on input line 83.
-LaTeX Info: Redefining \microtypesetup on input line 83.
+Package microtype Info: Applying patch `verbatim' on input line 97.
+LaTeX Info: Redefining \microtypesetup on input line 97.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using protrusion set `basicmath'.
@@ -477,36 +588,36 @@ Package microtype Info: No adjustment of character kerning.
 (c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/microtype/mt-cmr.cfg
 File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman (RS)
 )
-Package hyperref Info: Link coloring OFF on input line 83.
-LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 85.
+Package hyperref Info: Link coloring OFF on input line 97.
+LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 99.
 (c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OML+lmm on input line 85.
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 99.
 (c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 85.
+LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 99.
 (c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 85.
+LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 99.
 (c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <12> on input line 85.
+(Font)              <12> on input line 99.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 85.
+(Font)              <8> on input line 99.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 85.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 85.
+(Font)              <6> on input line 99.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 99.
 (c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 ) (c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 85.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 99.
 (c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) (c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/microtype/mt-msb.cfg
@@ -514,44 +625,61 @@ File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 ) [1
 
 {c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}]
-ignored: Infinite glue shrinkage found in box being split [2]
-<Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-4-1.pdf, id=25, 469.755pt x 325.215pt>
-File: Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-4-1.pdf Graphic file (type pdf)
-<use Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-4-1.pdf>
-Package pdftex.def Info: Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-4-1.pdf  used on input line 231.
+LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 177.
+(c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ts1lmr.fd
+File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+) [2{c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}]
+ignored: Infinite glue shrinkage found in box being split [3] [4]
+<Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-6-1.pdf, id=39, 469.755pt x 325.215pt>
+File: Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-6-1.pdf Graphic file (type pdf)
+<use Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-6-1.pdf>
+Package pdftex.def Info: Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-6-1.pdf  used on input line 427.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-<Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-4-2.pdf, id=26, 469.755pt x 325.215pt>
-File: Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-4-2.pdf Graphic file (type pdf)
-<use Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-4-2.pdf>
-Package pdftex.def Info: Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-4-2.pdf  used on input line 232.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 231--233
-[]
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 432.
+(c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
+File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+) [5 <./Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-6-1.pdf>]
+Overfull \hbox (39.4935pt too wide) in paragraph at lines 449--449
+[]\T1/lmtt/m/n/10 ## Factor analysis with Call: fa(r = cor(df[, -9]), nfactors = 5, rotate = "oblimin", fm = "mle")[] 
  []
 
-[3]
-Overfull \vbox (44.6926pt too high) has occurred while \output is active []
+<Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-7-1.pdf, id=51, 469.755pt x 325.215pt>
+File: Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-7-1.pdf Graphic file (type pdf)
+<use Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-7-1.pdf>
+Package pdftex.def Info: Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-7-1.pdf  used on input line 451.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
-[4 <./Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-4-1.pdf> <./Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-4-2.pdf>] [5] (./Proyecto_Final_AM.aux)
+Overfull \hbox (39.4935pt too wide) in paragraph at lines 455--455
+[]\T1/lmtt/m/n/10 ## Parallel analysis suggests that the number of factors =  5  and the number of components =  NA[] 
+ []
+
+<Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-7-2.pdf, id=52, 469.755pt x 325.215pt>
+File: Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-7-2.pdf Graphic file (type pdf)
+<use Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-7-2.pdf>
+Package pdftex.def Info: Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-7-2.pdf  used on input line 457.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+[6 <./Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-7-1.pdf>] [7 <./Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-7-2.pdf>] (./Proyecto_Final_AM.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-04-28>
  ***********
+
+LaTeX Warning: There were multiply-defined labels.
+
  ) 
 Here is how much of TeX's memory you used:
- 13449 strings out of 469331
- 215248 string characters out of 5464601
- 674774 words of memory out of 5000000
- 42013 multiletter control sequences out of 15000+600000
- 669207 words of font info for 98 fonts, out of 8000000 for 9000
+ 15025 strings out of 469331
+ 242136 string characters out of 5464601
+ 707866 words of memory out of 5000000
+ 43531 multiletter control sequences out of 15000+600000
+ 669192 words of font info for 94 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 83i,6n,93p,1014b,606s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx10.pfb><c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr17.pfb><c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb>
-Output written on Proyecto_Final_AM.pdf (5 pages, 181392 bytes).
+ 83i,7n,93p,1014b,676s stack positions out of 10000i,1000n,20000p,200000b,200000s
+<c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx10.pfb><c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr17.pfb><c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb><c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb>
+Output written on Proyecto_Final_AM.pdf (7 pages, 856983 bytes).
 PDF statistics:
- 141 PDF objects out of 1000 (max. 8388607)
- 116 compressed objects within 2 object streams
- 22 named destinations out of 1000 (max. 500000)
- 22659 words of extra memory for PDF output out of 24883 (max. 10000000)
+ 157 PDF objects out of 1000 (max. 8388607)
+ 124 compressed objects within 2 object streams
+ 26 named destinations out of 1000 (max. 500000)
+ 24680 words of extra memory for PDF output out of 24883 (max. 10000000)
 

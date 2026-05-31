@@ -11,7 +11,7 @@ knitr::opts_chunk$set(
   warning = FALSE,
   message = FALSE
 )
-
+library(factoextra)
 library(dplyr)
 library(corrplot)
 library(knitr)
@@ -21,7 +21,133 @@ library(expm)
 library(ggrepel)
 library(tidyr)
 library(GGally)
+library(psych)
+library(kableExtra)
 
+ca_svd = function(x){
+  
+  # Dimensions 
+  dims = dim(x)
+  r = dims[1]
+  c = dims[2]
+    
+  # Total number of observations
+  n = sum(x)
+  
+  # Sums by row and columns
+  row_sum=rowSums(x)
+  col_sum=colSums(x)
+  
+  # Masses and centroid
+  row_masses=row_sum/n
+  centroid=col_sum/n
+  
+  # Diagonal matrices with masses and centroid
+  Dr=diag(row_masses)
+  Dc=diag(centroid)
+  
+  # Inverse of squared root
+  Dr_sq=solve(sqrtm(Dr))
+  Dc_sq=solve(sqrtm(Dc))
+  
+  # Transform the masses and centroid to matrix
+  row_m=as.matrix(row_masses)
+  centroid_m=as.matrix(centroid)
+  
+  # Correspondence matrix
+  P=x/n
+  
+  # Standardised matrix
+  A=Dr_sq%*%(P-(row_m%*%t(centroid_m)))%*%Dc_sq
+  
+  # SVD decomposition
+  res=svd(A)
+  
+  # Eigenvalues and eigenvectors
+  values=res$d
+  U=res$u
+  V=res$v
+  
+  # Standard coordinates
+  X=Dr_sq%*%U
+  Y=Dc_sq%*%V
+  
+  # Principal coordinates
+  f=X%*%diag(res$d)
+  g=Y%*%diag(res$d)
+  
+  l = list(f=f,g=g,sv=values)
+  return(l)
+}
+
+plotFA=function(fa_mod,threshold=0,oblique=F,nodesNames=NULL){
+  
+  # Obtain the dimensions of the model and the loadings  
+  L = as.matrix(fa_mod$loadings)
+  p = nrow(L)
+  k = ncol(L)
+  
+  
+  # Assign names to the variable nodes
+  if(!is.null(nodesNames)){
+    if(length(nodesNames)!=p){
+      stop("length of nodesNames differs from number of variables")
+    }else{
+      rownames(L)=nodesNames
+    }
+  }
+  
+  # Creates the labels for the factor nodes
+  factorNames = paste0("F", 1:k)
+  colnames(L) = factorNames
+  
+  # Create adjacency matrix
+  adj = matrix(0, nrow = p + k, ncol = p + k)
+  adj[(p+1):(p+k), 1:p] = t(L)
+  
+  if(oblique){
+    Phi = fa_mod$Phi
+    diag(Phi)=0
+    Phi[lower.tri(Phi)] = 0
+    adj[(p+1):(p+k), (p+1):(p+k)] = Phi
+    
+    # Matrix indicating which edges are directed
+    directed_mat = matrix(FALSE, nrow = p + k, ncol = p + k)
+    
+    # Only loadings are directed
+    directed_mat[(p+1):(p+k), 1:p] = T
+  }else{
+    directed_mat =T
+  }
+  
+  # Keep the edges with weights > threshold
+  adj[abs(adj) <= threshold] = 0
+  
+  # Labels
+  labels = c(rownames(L), colnames(L))
+  
+  # Node colors
+  node_colors = c(rep("lightblue", p),rep("darkblue", k))
+  
+  # Edge colors
+  edge_colors = ifelse(adj > 0, "darkgreen", "darkred")
+  if(oblique){
+    edge_colors[(p+1):(p+k), (p+1):(p+k)] <- "darkblue"
+  }
+  
+  # Plot
+  qgraph(adj,
+         layout = "spring",
+         labels = labels,
+         color = node_colors,
+         esize = 1,
+         edge.labels = round(adj, 2),
+         edge.label.cex = 1.25,
+         edge.color = edge_colors,
+         edge.label.color='black',
+         directed = directed_mat,
+         arrows = TRUE)
+}
 
 ```
 
@@ -34,17 +160,18 @@ library(GGally)
 # 2. Descripción de los datos
 
 ```{r}
-ile <- read.csv("https://raw.githubusercontent.com/ndsn-alv/Analisis_Multivariado/main/Data/ile_2023_c1.csv")
 
+ile <- read.csv("https://raw.githubusercontent.com/ndsn-alv/Analisis_Multivariado/main/Data/ile_limpio.csv")
 ile_imp <- read.csv("https://raw.githubusercontent.com/ndsn-alv/Analisis_Multivariado/main/Data/ile_imp.csv")
-ile_imp <- ile_imp[,-1]
 
-# Obtener nombres de variables en común
-vars_comunes <- intersect(names(ile), names(ile_imp))
+### Obtener nombres de variables en común
 
-# Reemplazar en bloque
-ile[vars_comunes] <- ile_imp[vars_comunes]
+# vars_comunes <- intersect(names(ile), names(ile_imp))
 
+### Reemplazar en bloque
+
+# ile[vars_comunes] <- ile_imp[vars_comunes]
+unique(ile$estado_civil)
 ```
 
 Se tienen 17730 observaciones de 42 variables y tres tipos de variables:
@@ -96,11 +223,196 @@ Se tienen 17730 observaciones de 42 variables y tres tipos de variables:
 - *fecha_egreso_hosp*: Fecha de egreso hospitalario  
 - *fecha_cierre*: Fecha de cierre del procedimiento  
 
-## 2.1. Selección de variables
+# 3. Análisis descriptivo
 
-Utilizamos una versión de la base de datos imputada por el método de MICE. Sin embargo, no fue posible para todas las variables, en especial las que tiene formato de fecha o una gran cantidad de NAs. A continuación, se tiene el conteo de NAs por variable. 
+A partir de ahora es necesario hacer un selección de variables. Eliminando variables que no aportan valor analítico (fechas, parentesco, alcaldia / municipio, etc.). 
+
+Se toma en cuenta que las semanas de embarazo se miden por fecha de ultima menstruación que contiene muchos NAs. Se opta mejor usar la gestación por USG y convertir *semanas_gestacion_usg* a dias, multiplicando por 7 y sumando la columna *dias_gestacion_usg*.
 
 ```{r}
+
+ile$dias_gestacion_usg <- ifelse(
+  !is.na(ile$dias_gestacion_usg),
+  ile$semanas_gestacion_usg * 7 + ile$dias_gestacion_usg,
+  ile$semanas_gestacion_usg * 7
+)
+
+```
+
+Podemos identificar algunos bloques conceptuales:
+
+```{r}
+# Estadísticos descriptivos para variables numéricas
+tabla_numerica <- function(data, vars, titulo = "") {
+  data %>%
+    select(all_of(vars)) %>%
+    pivot_longer(everything(), names_to = "Variable", values_to = "valor") %>%
+    group_by(Variable) %>%
+    summarise(
+      N       = sum(!is.na(valor)),
+      NAs     = sum(is.na(valor)),
+      Media   = round(mean(valor, na.rm = TRUE), 2),
+      DE      = round(sd(valor,   na.rm = TRUE), 2),
+      Mín     = round(min(valor,  na.rm = TRUE), 2),
+      Q1      = round(quantile(valor, .25, na.rm = TRUE), 2),
+      Mediana = round(median(valor, na.rm = TRUE), 2),
+      Q3      = round(quantile(valor, .75, na.rm = TRUE), 2),
+      Máx     = round(max(valor,  na.rm = TRUE), 2),
+      .groups = "drop"
+    ) %>%
+    kable(
+      caption = titulo,
+      align   = c("l", rep("r", 9))
+    ) %>%
+    kable_styling(
+      bootstrap_options = c("striped", "hover", "condensed"),
+      full_width        = FALSE,
+      font_size         = 10
+    )
+}
+
+# Gráfico de barras para variables categóricas
+# max_cats: si la variable tiene más categorías que este valor, se recortan
+#           las menos frecuentes en "Otras" para mantener el gráfico legible.
+grafico_barras <- function(data, var, titulo = "", max_cats = 12,
+                           color_fill = "#4E79A7") {
+  df_freq <- data %>%
+    mutate(cat = ifelse(is.na(.data[[var]]), "(Sin dato)",
+                        as.character(.data[[var]]))) %>%
+    count(cat, name = "n") %>%
+    mutate(pct = n / sum(n))
+ 
+  # Colapsar categorías poco frecuentes si hay demasiadas
+  if (nrow(df_freq) > max_cats) {
+    top <- df_freq %>%
+      slice_max(n, n = max_cats - 1, with_ties = FALSE)
+    otras <- df_freq %>%
+      filter(!cat %in% top$cat) %>%
+      summarise(cat = "Otras", n = sum(n), pct = sum(pct))
+    df_freq <- bind_rows(top, otras)
+  }
+ 
+  df_freq <- df_freq %>%
+    mutate(cat = reorder(cat, n))   # orden ascendente → barra más larga arriba
+ 
+  ggplot(df_freq, aes(x = cat, y = pct)) +
+    geom_col(fill = color_fill, width = 0.7) +
+    geom_text(
+      aes(label = paste0(round(pct * 100, 1), "%\n(n=", n, ")")),
+      hjust  = -0.08,
+      size   = 2.8,
+      color  = "grey30"
+    ) +
+    scale_y_continuous(
+      labels = percent_format(accuracy = 1),
+      expand = expansion(mult = c(0, 0.18))
+    ) +
+    coord_flip() +
+    labs(
+      title = titulo,
+      x     = NULL,
+      y     = "Porcentaje"
+    ) +
+    theme_minimal(base_size = 11) +
+    theme(
+      plot.title      = element_text(face = "bold", size = 11),
+      panel.grid.major.y = element_blank(),
+      panel.grid.minor   = element_blank(),
+      axis.text.y     = element_text(size = 9)
+    )
+}
+```
+
+**A. Perfil sociodemográfico**
+
+- edad
+- estado_civil
+- nivel_edu
+- ocupacion
+- religion
+- entidad
+
+```{r}
+
+library(scales)
+## Numérica: edad
+
+## Categóricas
+
+par(mfrow = c(3,2))
+
+barplot(table(ile$estado_civil),
+        main = "Estado civil",
+        las = 2)
+
+barplot(table(ile$nivel_edu),
+        main = "Nivel educativo",
+        las = 2)
+
+barplot(table(ile$ocupacion),
+        main = "Ocupacion",
+        las = 2)
+
+barplot(table(ile$religion),
+        main = "Religion",
+        las = 2)
+
+barplot(table(ile$entidad),
+        main = "Entidad",
+        las = 2)
+
+```
+**B. Historia reproductiva**
+
+- edad_primera_menstruacion
+- edad_inicio_vida_sexual
+- numero_embarazos
+- numero_hijos
+- numero_abortos
+- numero_partos
+- numero_cesareas
+- numero_iles
+
+**C. Uso de servicios y proceso clínico**
+
+- anio
+- mes
+- institucion_derechohab
+- dias_gestacion_usg
+- procedimiento_ile
+
+**D. Resultado clínico**
+
+- se_complica
+- con_dolor
+- analgesico
+
+**E. Conducta anticonceptiva**
+
+- uso_anticonceptivo
+- anticonceptivo_post
+
+```{r}
+
+ile <- ile %>%
+  select(
+    # Tiempo
+    anio, mes,
+    
+    # A. Perfil sociodemográfico
+    edad, estado_civil, nivel_edu, ocupacion, religion, entidad,
+    
+    # B. Historia reproductiva
+    edad_primera_menstruacion, edad_inicio_vida_sexual,
+    numero_embarazos, numero_hijos, numero_abortos,
+    numero_partos, numero_cesareas, numero_iles,
+    
+    # D. Uso de servicios y proceso clínico
+    numero_consultas, dias_gestacion_usg, procedimiento_ile, institucion_derechohab,
+    
+    # E. Resultado clínico
+    se_complica, con_dolor, analgesico
+  )
 
 n_total <- nrow(ile)
 
@@ -116,82 +428,107 @@ kable(
   na_ile,
   Caption = "Frecuencia de NAs"
 )
+
 ```
 
-A partir de ahora es necesario hacer una selección de variables.
-
-Las variables *fecha_cierre* y *resultado_ile* son completamente NAs. Las fechas ademas no ser relevantes para el análisis tienen una gran cantidad de NAs. Variables categoricas y numéricas con gran cantidad de NAs tambien se eliminan (*uso_anticonceptivo*, *anticonceptivo_post*, *desc_servicio*, *firma_consentimiento*, *semanas_embarazo* y *numero_consultas*). Se piensa hacer un análisis por entidad, por lo que variables como *alcaldia* y *municipio* estan de mas. Motivos de interrupción todas contienen el mismo valor (Interrupción voluntaria y 13 NAs) por lo que no es relevante, asi como *parentesco*, *recibio_consejeria* y *referida* tampoco nos interesa.
-
-Ahora, transformamos algunas variables. Por podemos calcular el numero total de dias de gestacion por ultrasonido multiplicando las semanas de gestacion por los 7 dias de la semana y sumarle los dias de gestacion (son valores entre 0 y 6). Por otro lado, la variable *numero_iles* cuenta el numero de veces que una mujer realizó una interrupción legal previa al procedimiento actual. Por lo que sumamos 1 a toda la columna para incluir la interrupción mas reciente.
+#4. Análisis de componentes principales (PCA)
 
 ```{r}
 
-ile$dias_gestacion_usg <- ile$semanas_gestacion_usg * 7 + ile$dias_gestacion_usg
+library(factoextra)
 
-ile <- ile[, !(names(ile) %in% c(
-  "fecha_cierre", "resultado_ile", "fecha_egreso_hosp",
-  "fecha_ingreso_hosp", "fecha_ultima_menstruacion",
-  "fecha_primera_valoracion", "fecha_ingreso",
-  "uso_anticonceptivo", "anticonceptivo_post",
-  "desc_servicio", "firma_consentimiento","semanas_embarazo",
-  "numero_consultas", "alcaldia", "municipio", "motivos_interrupcion", "parentesco", "referida", "recibio_consejeria", "semanas_gestacion_usg"
-))]
-```
-
-# 3. Metodología
-
-## 3.1 Análisis descriptivo
-
-```{r}
-
-# Copia de trabajo
-df <- ile[, c(
-  "anio","mes","estado_civil","edad","institucion_derechohab",
-  "nivel_edu","ocupacion","religion","entidad",
-  "edad_primera_menstruacion","edad_inicio_vida_sexual",
-  "numero_hijos","numero_embarazos","numero_abortos",
-  "numero_partos","numero_cesareas","numero_iles",
-  "dias_gestacion_usg","se_complica","con_dolor",
-  "analgesico","procedimiento_ile"
+# Incluir variable de color
+df_full <- ile[,c(
+  "edad_inicio_vida_sexual", "edad_primera_menstruacion","numero_hijos", "numero_embarazos","numero_partos",
+  "numero_abortos", "numero_cesareas", "numero_iles",
+  "edad"
 )]
 
-# Convertir a factor variables categóricas
-factores <- c("anio","mes","estado_civil","institucion_derechohab",
-              "nivel_edu","ocupacion","religion","entidad",
-              "se_complica","con_dolor","analgesico","procedimiento_ile")
+# Eliminar NA de forma consistente
+df_full <- na.omit(df_full)
 
-df[factores] <- lapply(df[factores], as.factor)
+# Separar
+color_var <- df_full$edad
+df <- df_full[, -3:-4]
 
-num_vars <- c("edad","edad_primera_menstruacion","edad_inicio_vida_sexual",
-              "numero_hijos","numero_embarazos","numero_abortos",
-              "numero_partos","numero_cesareas","numero_iles",
-              "dias_gestacion_usg")
+# PCA
+pca <- prcomp(df, scale. = TRUE)
 
-cat_vars <- setdiff(names(df), num_vars)
+# Biplot coloreado
+fviz_pca_biplot(
+  pca,
+  geom = "point",
+  col.ind = color_var,
+  gradient.cols = c("black", "orange", "darkred"),
+  title = "PCA coloreado por edad",
+  ggtheme = theme_minimal(),
+  repel = T,
+  col.var = "black"
+)
 
-par(mfrow=c(3,4))
-for(v in num_vars){
-  hist(df[[v]], main=v, col="lightblue")
-}
-
-par(mfrow=c(3,4))
-for(v in cat_vars){
-  barplot(table(df[[v]]), main=v, las=2)
-}
+ggplot(pca)
 ```
 
-## 3.2. Análisis de componentes principales (PCA)
+# 5. Análisis exploratorio de factores (EFA)
 
-## 3.3. Análisis exploratorio de factores (EFA)
+```{r}
 
-## 3.4. Análisis de correspondencias (CA)
+library(psych)
+library(qgraph)
 
-## 3.5. Análisis de conglomerados (Clustering)
+efa <- fa(r=cor(df_full[,-9]),nfactors=5,fm="mle",rotate="oblimin")
+summary(efa)
+fa.parallel(df_full[,-9], fm = "mle", fa = "fa")
 
-## 3.6. Análisis de discriminantes (AC)
+plotFA(efa,nodesNames=colnames(df_full[,-9]),threshold=.3, oblique = T)
 
-## 3.7. Árboles de decisión
+```
 
-# 4. Resultados 
+# 6. Análisis de correspondencias (CA)
 
-# 5. Conclusiones
+```{r}
+# Asegurar que todas las variables categóricas sean factores
+
+ile$se_complica <- as.factor(ile$se_complica)
+ile$con_dolor <- as.factor(ile$con_dolor)
+ile$analgesico <- as.factor(ile$analgesico)
+
+# Matriz indicadora
+
+mat_ind <- model.matrix(
+  ~ se_complica + con_dolor + analgesico - 1,
+  data = ile,
+  contrasts.arg = list(
+    se_complica = contrasts(ile$se_complica, contrasts = FALSE),
+    con_dolor = contrasts(ile$con_dolor, contrasts = FALSE),
+    analgesico = contrasts(ile$analgesico, contrasts = FALSE)
+  )
+)
+# Matriz de Burt
+
+mat_burt <- t(mat_ind) %*% mat_ind
+
+# Solucion
+
+ca <- ca_svd(mat_burt)
+labels <- colnames(mat_burt)
+
+ca_cat <- data.frame(
+  x = ca$f[,1],
+  y = ca$f[,2],
+  label = labels
+)
+
+ggplot(ca_cat, aes(x = x, y = y)) +
+  geom_text(aes(label = label), size = 3) +
+  theme_minimal() +geom_point(aes(x = 0, y = 0))
+
+```
+
+# 7. Análisis de conglomerados (Clustering)
+
+# 8. Análisis de discriminantes (AC)
+
+# 9. Resultados 
+
+# 10. Conclusiones
