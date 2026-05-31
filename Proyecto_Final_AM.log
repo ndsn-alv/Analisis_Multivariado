@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.5.17)  27 MAY 2026 22:29
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.5.17)  30 MAY 2026 18:37
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -514,44 +514,44 @@ File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 ) [1
 
 {c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}]
-ignored: Infinite glue shrinkage found in box being split [2]
-<Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-4-1.pdf, id=25, 469.755pt x 325.215pt>
-File: Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-4-1.pdf Graphic file (type pdf)
-<use Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-4-1.pdf>
-Package pdftex.def Info: Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-4-1.pdf  used on input line 231.
+LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 163.
+(c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ts1lmr.fd
+File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+) [2{c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}]
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 274.
+(c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
+File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+) [3]
+<Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-6-1.pdf, id=31, 469.755pt x 325.215pt>
+File: Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-6-1.pdf Graphic file (type pdf)
+<use Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-6-1.pdf>
+Package pdftex.def Info: Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-6-1.pdf  used on input line 312.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-<Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-4-2.pdf, id=26, 469.755pt x 325.215pt>
-File: Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-4-2.pdf Graphic file (type pdf)
-<use Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-4-2.pdf>
-Package pdftex.def Info: Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-4-2.pdf  used on input line 232.
+[4 <./Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-6-1.pdf>]
+<Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-7-1.pdf, id=42, 469.755pt x 325.215pt>
+File: Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-7-1.pdf Graphic file (type pdf)
+<use Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-7-1.pdf>
+Package pdftex.def Info: Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-7-1.pdf  used on input line 361.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 231--233
-[]
- []
-
-[3]
-Overfull \vbox (44.6926pt too high) has occurred while \output is active []
-
-[4 <./Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-4-1.pdf> <./Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-4-2.pdf>] [5] (./Proyecto_Final_AM.aux)
+[5] [6 <./Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-7-1.pdf>] (./Proyecto_Final_AM.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-04-28>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 13449 strings out of 469331
- 215248 string characters out of 5464601
- 674774 words of memory out of 5000000
- 42013 multiletter control sequences out of 15000+600000
- 669207 words of font info for 98 fonts, out of 8000000 for 9000
+ 13511 strings out of 469331
+ 216776 string characters out of 5464601
+ 677561 words of memory out of 5000000
+ 42083 multiletter control sequences out of 15000+600000
+ 669086 words of font info for 93 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 83i,6n,93p,1014b,606s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx10.pfb><c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr17.pfb><c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb>
-Output written on Proyecto_Final_AM.pdf (5 pages, 181392 bytes).
+ 83i,6n,93p,1014b,702s stack positions out of 10000i,1000n,20000p,200000b,200000s
+<c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx10.pfb><c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr17.pfb><c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb><c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb>
+Output written on Proyecto_Final_AM.pdf (6 pages, 299857 bytes).
 PDF statistics:
- 141 PDF objects out of 1000 (max. 8388607)
- 116 compressed objects within 2 object streams
- 22 named destinations out of 1000 (max. 500000)
- 22659 words of extra memory for PDF output out of 24883 (max. 10000000)
+ 136 PDF objects out of 1000 (max. 8388607)
+ 107 compressed objects within 2 object streams
+ 19 named destinations out of 1000 (max. 500000)
+ 24675 words of extra memory for PDF output out of 24883 (max. 10000000)
 
