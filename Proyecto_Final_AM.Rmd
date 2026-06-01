@@ -12,6 +12,7 @@ knitr::opts_chunk$set(
   message = FALSE
 )
 library(factoextra)
+library(qgraph)
 library(dplyr)
 library(corrplot)
 library(knitr)
@@ -127,8 +128,9 @@ plotFA=function(fa_mod,threshold=0,oblique=F,nodesNames=NULL){
   labels = c(rownames(L), colnames(L))
   
   # Node colors
+
   node_colors = c(rep("lightblue", p),rep("darkblue", k))
-  
+
   # Edge colors
   edge_colors = ifelse(adj > 0, "darkgreen", "darkred")
   if(oblique){
@@ -162,16 +164,9 @@ plotFA=function(fa_mod,threshold=0,oblique=F,nodesNames=NULL){
 ```{r}
 
 ile <- read.csv("https://raw.githubusercontent.com/ndsn-alv/Analisis_Multivariado/main/Data/ile_limpio.csv")
+
 ile_imp <- read.csv("https://raw.githubusercontent.com/ndsn-alv/Analisis_Multivariado/main/Data/ile_imp.csv")
 
-### Obtener nombres de variables en común
-
-# vars_comunes <- intersect(names(ile), names(ile_imp))
-
-### Reemplazar en bloque
-
-# ile[vars_comunes] <- ile_imp[vars_comunes]
-unique(ile$estado_civil)
 ```
 
 Se tienen 17730 observaciones de 42 variables y tres tipos de variables:
@@ -242,85 +237,8 @@ ile$dias_gestacion_usg <- ifelse(
 Podemos identificar algunos bloques conceptuales:
 
 ```{r}
-# Estadísticos descriptivos para variables numéricas
-tabla_numerica <- function(data, vars, titulo = "") {
-  data %>%
-    select(all_of(vars)) %>%
-    pivot_longer(everything(), names_to = "Variable", values_to = "valor") %>%
-    group_by(Variable) %>%
-    summarise(
-      N       = sum(!is.na(valor)),
-      NAs     = sum(is.na(valor)),
-      Media   = round(mean(valor, na.rm = TRUE), 2),
-      DE      = round(sd(valor,   na.rm = TRUE), 2),
-      Mín     = round(min(valor,  na.rm = TRUE), 2),
-      Q1      = round(quantile(valor, .25, na.rm = TRUE), 2),
-      Mediana = round(median(valor, na.rm = TRUE), 2),
-      Q3      = round(quantile(valor, .75, na.rm = TRUE), 2),
-      Máx     = round(max(valor,  na.rm = TRUE), 2),
-      .groups = "drop"
-    ) %>%
-    kable(
-      caption = titulo,
-      align   = c("l", rep("r", 9))
-    ) %>%
-    kable_styling(
-      bootstrap_options = c("striped", "hover", "condensed"),
-      full_width        = FALSE,
-      font_size         = 10
-    )
-}
 
-# Gráfico de barras para variables categóricas
-# max_cats: si la variable tiene más categorías que este valor, se recortan
-#           las menos frecuentes en "Otras" para mantener el gráfico legible.
-grafico_barras <- function(data, var, titulo = "", max_cats = 12,
-                           color_fill = "#4E79A7") {
-  df_freq <- data %>%
-    mutate(cat = ifelse(is.na(.data[[var]]), "(Sin dato)",
-                        as.character(.data[[var]]))) %>%
-    count(cat, name = "n") %>%
-    mutate(pct = n / sum(n))
- 
-  # Colapsar categorías poco frecuentes si hay demasiadas
-  if (nrow(df_freq) > max_cats) {
-    top <- df_freq %>%
-      slice_max(n, n = max_cats - 1, with_ties = FALSE)
-    otras <- df_freq %>%
-      filter(!cat %in% top$cat) %>%
-      summarise(cat = "Otras", n = sum(n), pct = sum(pct))
-    df_freq <- bind_rows(top, otras)
-  }
- 
-  df_freq <- df_freq %>%
-    mutate(cat = reorder(cat, n))   # orden ascendente → barra más larga arriba
- 
-  ggplot(df_freq, aes(x = cat, y = pct)) +
-    geom_col(fill = color_fill, width = 0.7) +
-    geom_text(
-      aes(label = paste0(round(pct * 100, 1), "%\n(n=", n, ")")),
-      hjust  = -0.08,
-      size   = 2.8,
-      color  = "grey30"
-    ) +
-    scale_y_continuous(
-      labels = percent_format(accuracy = 1),
-      expand = expansion(mult = c(0, 0.18))
-    ) +
-    coord_flip() +
-    labs(
-      title = titulo,
-      x     = NULL,
-      y     = "Porcentaje"
-    ) +
-    theme_minimal(base_size = 11) +
-    theme(
-      plot.title      = element_text(face = "bold", size = 11),
-      panel.grid.major.y = element_blank(),
-      panel.grid.minor   = element_blank(),
-      axis.text.y     = element_text(size = 9)
-    )
-}
+
 ```
 
 **A. Perfil sociodemográfico**
@@ -334,32 +252,6 @@ grafico_barras <- function(data, var, titulo = "", max_cats = 12,
 
 ```{r}
 
-library(scales)
-## Numérica: edad
-
-## Categóricas
-
-par(mfrow = c(3,2))
-
-barplot(table(ile$estado_civil),
-        main = "Estado civil",
-        las = 2)
-
-barplot(table(ile$nivel_edu),
-        main = "Nivel educativo",
-        las = 2)
-
-barplot(table(ile$ocupacion),
-        main = "Ocupacion",
-        las = 2)
-
-barplot(table(ile$religion),
-        main = "Religion",
-        las = 2)
-
-barplot(table(ile$entidad),
-        main = "Entidad",
-        las = 2)
 
 ```
 **B. Historia reproductiva**
@@ -381,13 +273,19 @@ barplot(table(ile$entidad),
 - dias_gestacion_usg
 - procedimiento_ile
 
-**D. Resultado clínico**
+**D. Uso de servicios y proceso clínico**
+
+- anio
+- mes
+- procedimiento_ile
+
+**E. Resultado clínico**
 
 - se_complica
 - con_dolor
 - analgesico
 
-**E. Conducta anticonceptiva**
+**F. Conducta anticonceptiva**
 
 - uso_anticonceptivo
 - anticonceptivo_post
@@ -466,16 +364,11 @@ fviz_pca_biplot(
   col.var = "black"
 )
 
-ggplot(pca)
 ```
 
 # 5. Análisis exploratorio de factores (EFA)
 
 ```{r}
-
-library(psych)
-library(qgraph)
-
 efa <- fa(r=cor(df_full[,-9]),nfactors=5,fm="mle",rotate="oblimin")
 summary(efa)
 fa.parallel(df_full[,-9], fm = "mle", fa = "fa")
