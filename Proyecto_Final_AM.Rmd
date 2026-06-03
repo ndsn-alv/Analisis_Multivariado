@@ -1,5 +1,5 @@
 ---
-title: "Análisis estadístico de interrupciones legales del embarazo (ILE) utilizando métodos multivariados"
+title: "Análisis de interrupciones legales del embarazo (ILE) utilizando métodos multivariados"
 author: "Nicolás de Silva Nacenta, José Manuel Bragado Villegas, Edwin Alexander Bravo García"
 date: "5 de junio de 2026"
 output: pdf_document
@@ -27,6 +27,7 @@ library(kableExtra)
 library(patchwork)
 library(caret)
 library(MASS)
+library(FactoMineR)
 
 ca_svd = function(x){
   
@@ -160,7 +161,11 @@ plotFA=function(fa_mod,threshold=0,oblique=F,nodesNames=NULL){
 
 ## 1.1. Objetivo general
 
+Explorar la base de datos utilizando métodos descriptivos, de reducción de dimensión y de clasificación. 
+
 ## 1.2. Objetivos específicos
+
+- 
 
 # 2. Descripción de los datos
 
@@ -620,43 +625,79 @@ plotFA(efa, nodesNames = colnames(ile_num),
 
 # 6. Análisis de correspondencias (CA)
 
+
 ```{r}
-# Asegurar que todas las variables categóricas sean factores
+## Se elimina: referida, motivo_ile, alcaldia / municipio, recibio_consejeria
 
-ile$se_complica <- as.factor(ile$se_complica)
-ile$con_dolor <- as.factor(ile$con_dolor)
-ile$analgesico <- as.factor(ile$analgesico)
-ile$procedimiento_ile <- as.factor(ile$procedimiento_ile)
+ile_cat <- ile %>%
+  dplyr::select(anio, mes, estado_civil, referida, 
+                institucion_derechohab, nivel_edu,
+                ocupacion, religion, entidad,
+                recibio_consejeria, se_complica,firma_consentimiento,
+                con_dolor, analgesico, procedimiento_ile) %>%
+    mutate(across(everything(), as.factor))
 
-# Matriz indicadora
+ile_cat <- ile_cat %>% mutate(a = case_when(
+  se_complica == "Si" & con_dolor == "Si" & analgesico == "Si" ~ "SSS",
+  se_complica == "Si" & con_dolor == "Si" & analgesico == "No" ~ "SSN",
+  se_complica == "Si" & con_dolor == "No" & analgesico == "Si" ~ "SNS",
+  se_complica == "Si" & con_dolor == "No" & analgesico == "No" ~ "SNN",
+  se_complica == "No" & con_dolor == "Si" & analgesico == "Si" ~ "NSS",
+  se_complica == "No" & con_dolor == "Si" & analgesico == "No" ~ "NSN",
+  se_complica == "No" & con_dolor == "No" & analgesico == "Si" ~ "NNS",
+  se_complica == "No" & con_dolor == "No" & analgesico == "No" ~ "NNN"
+))
 
-mat_ind <- model.matrix(
-  ~ se_complica + con_dolor + analgesico - 1,
-  data = ile,
-  contrasts.arg = list(
-    se_complica = contrasts(ile$se_complica, contrasts = FALSE),
-    con_dolor = contrasts(ile$con_dolor, contrasts = FALSE),
-    analgesico = contrasts(ile$analgesico, contrasts = FALSE)
-  )
+# ile_cat <- ile_cat %>%
+#  mutate(estado_civil = case_when(
+#    estado_civil %in% c("Casada", "Unión libre") ~ "Con pareja",
+#   estado_civil %in% c("Divorciada", "Separada", "Soltera", "Viuda") ~ "Sin pareja",
+#    TRUE ~ "Sin especificar"
+#  )) %>% 
+#  mutate(institucion_derechohab = case_when(
+#    institucion_derechohab %in% c("IMSS", "ISSSTE", "Otra", "Seguro Popular") ~ "Alguno",
+#    institucion_derechohab %in% c("Ninguno") ~ "Ninguno",
+#    TRUE ~ "No especificado"
+#  )) %>%
+#  mutate(nivel_edu = case_when(
+#    nivel_edu %in% c("Licenciatura", "Maestría") ~ "Licenciatura o superior",
+#    nivel_edu %in% c("Preparatoria") ~ "Preparatoria",
+#    TRUE ~ "Secundaria o inferior"
+#  )) %>%
+#  mutate(religion = case_when(
+#    religion %in% c("Católica") ~ "Católica",
+#    religion %in% c("Ninguna") ~ "Ninguna",
+#    TRUE ~ "Otra"
+#  )) %>% 
+#  mutate(entidad = case_when(
+#    entidad %in% c("Ciudad de México", "Estado de México") ~ entidad,
+#    TRUE ~ "Otro"
+#  ))
+
+ile_cat <- ile_cat %>% dplyr::select(-se_complica, -con_dolor, -analgesico)
+
+ile_mca <- MCA(ile_cat, graph = FALSE)
+
+fviz_mca_ind(
+  ile_mca,
+  geom = "point",     # solo puntos
+  pointsize = 1,      # tamaño del punto
+  label = "none",      # sin texto
+  habillage = ile_cat$a
 )
-# Matriz de Burt
 
-mat_burt <- t(mat_ind) %*% mat_ind
 
-# Solucion
+```
+```{r}
+ile_mca <- MCA(ile_cat, graph = FALSE)
 
-ca <- ca_svd(mat_burt)
-labels <- colnames(mat_burt)
-
-ca_cat <- data.frame(
-  x = ca$f[,1],
-  y = ca$f[,2],
-  label = labels
+fviz_mca_ind(
+  ile_mca,
+  geom = "point",     # solo puntos
+  pointsize = 1,      # tamaño del punto
+  label = "none",      # sin texto
+  habillage = ile_cat$anio
 )
-
-ggplot(ca_cat, aes(x = x, y = y)) +
-  geom_text(aes(label = label), size = 3) +
-  theme_minimal()
 
 ```
 
