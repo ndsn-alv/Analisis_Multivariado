@@ -24,6 +24,7 @@ library(tidyr)
 library(GGally)
 library(psych)
 library(kableExtra)
+library(patchwork)
 
 ca_svd = function(x){
   
@@ -167,6 +168,7 @@ ile <- read.csv("https://raw.githubusercontent.com/ndsn-alv/Analisis_Multivariad
 
 ile_imp <- read.csv("https://raw.githubusercontent.com/ndsn-alv/Analisis_Multivariado/main/Data/ile_imp.csv")
 
+
 ```
 
 Se tienen 17730 observaciones de 42 variables y tres tipos de variables:
@@ -234,13 +236,6 @@ ile$dias_gestacion_usg <- ifelse(
 
 ```
 
-Podemos identificar algunos bloques conceptuales:
-
-```{r}
-
-
-```
-
 **A. Perfil sociodemográfico**
 
 - edad
@@ -250,10 +245,6 @@ Podemos identificar algunos bloques conceptuales:
 - religion
 - entidad
 
-```{r}
-
-
-```
 **B. Historia reproductiva**
 
 - edad_primera_menstruacion
@@ -273,19 +264,14 @@ Podemos identificar algunos bloques conceptuales:
 - dias_gestacion_usg
 - procedimiento_ile
 
-**D. Uso de servicios y proceso clínico**
-
-- anio
-- mes
-- procedimiento_ile
-
-**E. Resultado clínico**
+**D. Resultado clínico**
 
 - se_complica
 - con_dolor
 - analgesico
+- resultado_ile
 
-**F. Conducta anticonceptiva**
+**E. Conducta anticonceptiva**
 
 - uso_anticonceptivo
 - anticonceptivo_post
@@ -306,7 +292,7 @@ ile <- ile %>%
     numero_partos, numero_cesareas, numero_iles,
     
     # D. Uso de servicios y proceso clínico
-    numero_consultas, dias_gestacion_usg, procedimiento_ile, institucion_derechohab,
+    numero_consultas, semanas_gestacion_usg ,dias_gestacion_usg,semanas_embarazo, procedimiento_ile,     institucion_derechohab,
     
     # E. Resultado clínico
     se_complica, con_dolor, analgesico
@@ -329,17 +315,19 @@ kable(
 
 ```
 
-#4. Análisis de componentes principales (PCA)
+# 4. Análisis de componentes principales (PCA)
+
+Como primera técnica de reducción de dimensión realizaremos un análisis sobre los componentes principales exclusivamente sobre las variables numéricas. Obteniendo las siguientes características:
 
 ```{r}
 
-library(factoextra)
-
 # Incluir variable de color
+
 df_full <- ile[,c(
   "edad_inicio_vida_sexual", "edad_primera_menstruacion","numero_hijos", "numero_embarazos","numero_partos",
   "numero_abortos", "numero_cesareas", "numero_iles",
-  "edad"
+  "edad", "numero_consultas", "semanas_embarazo", "semanas_gestacion_usg","dias_gestacion_usg",
+  "estado_civil"
 )]
 
 # Eliminar NA de forma consistente
@@ -347,33 +335,225 @@ df_full <- na.omit(df_full)
 
 # Separar
 color_var <- df_full$edad
-df <- df_full[, -3:-4]
+df <- df_full %>% select(-dias_gestacion_usg, - estado_civil)
 
 # PCA
 pca <- prcomp(df, scale. = TRUE)
+imp <- summary(pca)$importance
 
-# Biplot coloreado
-fviz_pca_biplot(
-  pca,
-  geom = "point",
-  col.ind = color_var,
-  gradient.cols = c("black", "orange", "darkred"),
-  title = "PCA coloreado por edad",
-  ggtheme = theme_minimal(),
-  repel = T,
-  col.var = "black"
+df_pca <- data.frame(
+  Componente = colnames(imp),
+  DesvStd    = imp["Standard deviation", ],
+  PropVar    = imp["Proportion of Variance", ],
+  PropAcum   = imp["Cumulative Proportion", ]
+)
+
+df_pca_t <- as.data.frame(t(df_pca[,-1]))
+colnames(df_pca_t) <- df_pca$Componente
+
+kable(
+  df_pca_t,
+  caption = "Importancia de los componentes principales",
+  digits = 4
 )
 
 ```
 
+Podemos ver que 5 dimensiones son suficientes para explicar mas del 70% de la varianza de los datos. Podemos visualizar los datos haciendo proyecciones en el plano para cada combinación de dimensiones.
+
+```{r}
+# Biplot coloreado
+
+color_var <- list(
+  embarazos = df_full$numero_embarazos, 
+  gestacion = df_full$semanas_gestacion_usg, 
+  vida_sexual = df_full$edad_inicio_vida_sexual,
+  edad = df_full$edad
+) 
+
+bp1 <- fviz_pca_biplot(
+  pca,
+  axes = c(1,2),
+  geom = "point",
+  col.ind = color_var$edad,
+  gradient.cols = c("yellow","orange", "darkred", "black"),
+  title = "Embarazos vs. gestacion_usg",
+  ggtheme = theme_minimal(),
+  repel = T,
+  col.var = "black",
+  labelsize = 2,
+  pointsize = 1
+)
+
+
+bp2 <- fviz_pca_biplot(
+  pca,
+  axes = c(1,3),
+  geom = "point",
+  col.ind = color_var$edad,
+  gradient.cols = c("yellow","orange", "darkred", "black"),
+  title = "Embarazos vs. inicio_vida_sexual",
+  ggtheme = theme_minimal(),
+  repel = T,
+  col.var = "black",
+  labelsize = 2,
+  pointsize = 1
+)
+
+bp3 <- fviz_pca_biplot(
+  pca,
+  axes = c(1,4),
+  geom = "point",
+  col.ind = color_var$edad,
+  gradient.cols = c("yellow","orange", "darkred", "black"),
+  title = "Embarazos vs. partos y cesareas",
+  ggtheme = theme_minimal(),
+  repel = T,
+  col.var = "black",
+  labelsize = 2,
+  pointsize = 1
+)
+
+bp4 <- fviz_pca_biplot(
+  pca,
+  axes = c(1,5),
+  geom = "point",
+  col.ind = color_var$edad,
+  gradient.cols = c("yellow","orange", "darkred", "black"),
+  title = "Embarazos vs. abortos e iles",
+  ggtheme = theme_minimal(),
+  repel = T,
+  col.var = "black",
+  labelsize = 2,
+  pointsize = 1
+)
+
+bp5 <- fviz_pca_biplot(
+  pca,
+  axes = c(2,3),
+  geom = "point",
+  col.ind = color_var$vida_sexual,
+  gradient.cols = c("yellow","orange", "darkred", "black"),
+  title = "Gestación_usg vs. inicio_vida_sexual",
+  ggtheme = theme_minimal(),
+  repel = T,
+  col.var = "black",
+  labelsize = 2,
+  pointsize = 1
+)
+
+bp6 <- fviz_pca_biplot(
+  pca,
+  axes = c(2,4),
+  geom = "point",
+  col.ind = color_var$embarazos,
+  gradient.cols = c("yellow","orange", "darkred", "black"),
+  title = "Gestación_usg vs. partos y cesareas",
+  ggtheme = theme_minimal(),
+  repel = T,
+  col.var = "black",
+  labelsize = 2,
+  pointsize = 1
+)
+
+bp7 <- fviz_pca_biplot(
+  pca,
+  axes = c(2,5),
+  geom = "point",
+  col.ind = color_var$embarazos,
+  gradient.cols = c("yellow","orange", "darkred", "black"),
+  title = "Gestación_usg vs. abortos e iles",
+  ggtheme = theme_minimal(),
+  repel = T,
+  col.var = "black",
+  labelsize = 2,
+  pointsize = 1
+)
+
+bp8 <- fviz_pca_biplot(
+  pca,
+  axes = c(3,4),
+  geom = "point",
+  col.ind = color_var$embarazos,
+  gradient.cols = c("yellow","orange", "darkred", "black"),
+  title = "Inicio_vida_sexual vs. partos y cesareas",
+  ggtheme = theme_minimal(),
+  repel = T,
+  col.var = "black",
+  labelsize = 2,
+  pointsize = 1
+)
+
+bp9 <- fviz_pca_biplot(
+  pca,
+  axes = c(3,5),
+  geom = "point",
+  col.ind = color_var$embarazos,
+  gradient.cols = c("yellow","orange", "darkred", "black"),
+  title = "Inicio_vida_sexual vs. abortos e iles",
+  ggtheme = theme_minimal(),
+  repel = T,
+  col.var = "black",
+  labelsize = 2,
+  pointsize = 1
+)
+
+bp10 <- fviz_pca_biplot(
+  pca,
+  axes = c(4,5),
+  geom = "point",
+  col.ind = color_var$embarazos,
+  gradient.cols = c("yellow","orange", "darkred", "black"),
+  title = "Partos y cesareas vs. abortos e iles",
+  ggtheme = theme_minimal(),
+  repel = T,
+  col.var = "black",
+  labelsize = 2,
+  pointsize = 1
+)
+
+wrap_plots(bp1, bp2, bp3, bp4, ncol = 2)
+
+```
+
+Notese que los datos estan coloreados por edad. Facilmente podemos interpretar cada una de las 5 dimensiones:
+
+- **Dim. 1:** Orden en el número de embarazos. 
+- **Dim. 2:** Orden en las semanas de gestación USG.
+- **Dim. 3:** Orden en edad de inicio de vida sexual.
+- **Dim. 4:** Comparación entre número de partos y cesáreas (nacimientos).
+- **Dim. 5:** Comparación entre número de abortos e ILEs.
+
+La proyección nos permite visualizar una relación entre cada una de las dimensiones, lo cual nos permite identificar grupos. Estos grupos forman patrones en forma de "escamas" y claramente indican el grupo de mujeres con la misma cantidad de embarazos. Estos grupos son mas grandes ya que solo distingue embarazos. Sin embargo, cada "escama" de las últimos grupos (comparación entre partos-cesareas y abortos-iles) pueden interpretarse como grupos de mujeres con una cierta cantidad de partos y cesareas (análogamente, abortos e iles).
+
+```{r}
+wrap_plots(bp5, bp6, bp7, ncol = 2)
+
+```
+
+Se puede ver claramente la relación de las dimensiones. Para el primer gráfico, la edad no sirve para identificar grupos así que se opto por colorear por edad de inicio de vida sexual para visualizar el orden en las edades de inicio de la vida sexual, manteniendo una forma piramidal cuya base representa la edad promedio entre 10 y 20 años y punta al edad mas grande registrada (+40 años). Tambien hay una poca cantidad de puntos cuya edad de incio de vida sexual es menor a 10.
+
+Para los últimos dos gráficos se coloreo por embarazos, mostrando que las mujeres con menos embarazos se distribuyen en el centro del eje e incluyen valores de partos y cesareas equilibrados. La tendencia hacia arriba o hacia abajo depende del numero de partos y cesareas, respectivamente. Análogamente ocurre lo mismo en el caso de abortos e ILEs. 
+
+```{r}
+wrap_plots(bp8, bp9, bp10, ncol = 2)
+
+```
+
+Este grupo de gráficas también estan coloreadas por embarazos. En las primeras dos gráficas se mantiene un comportamiento muy similar a la del grupo pasado de gráficas. Sin embargo, se aprecian unas cuentas observaciones separadas del lado izquierdo, representando a las mujeres con mayor cantidad de embarazos que a su vez iniciaron su vida sexual a temprana edad.
+
+Para la última gráfica se observó que los grupos (numero de embarazos) son de forma elíptica por capas. Siendo las capas exteriores las mujeres con mayores embarazos y el núcleo como la concentración de menores embarazos. Los puntos cercanos a los ejes podrian ser un equilibrio entre partos, cesareas, abortos e iles.
+
 # 5. Análisis exploratorio de factores (EFA)
 
 ```{r}
-efa <- fa(r=cor(df_full[,-9]),nfactors=5,fm="mle",rotate="oblimin")
-summary(efa)
-fa.parallel(df_full[,-9], fm = "mle", fa = "fa")
+efa <- fa(r=cor(df),nfactors=6,fm="pa",rotate="oblimin")
 
-plotFA(efa,nodesNames=colnames(df_full[,-9]),threshold=.3, oblique = T)
+efa
+
+fa.parallel(df, fm = "pa", fa = "fa")
+
+plotFA(efa,nodesNames=colnames(df),threshold=.20, oblique = T)
 
 ```
 
@@ -385,6 +565,7 @@ plotFA(efa,nodesNames=colnames(df_full[,-9]),threshold=.3, oblique = T)
 ile$se_complica <- as.factor(ile$se_complica)
 ile$con_dolor <- as.factor(ile$con_dolor)
 ile$analgesico <- as.factor(ile$analgesico)
+ile$procedimiento_ile <- as.factor(ile$procedimiento_ile)
 
 # Matriz indicadora
 
@@ -414,7 +595,7 @@ ca_cat <- data.frame(
 
 ggplot(ca_cat, aes(x = x, y = y)) +
   geom_text(aes(label = label), size = 3) +
-  theme_minimal() +geom_point(aes(x = 0, y = 0))
+  theme_minimal()
 
 ```
 

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.5.17)  1 JUN 2026 00:49
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.5.17)  2 JUN 2026 20:32
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -609,64 +609,286 @@ File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 ) [1
 
 {c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}]
-LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 177.
+LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 175.
 (c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 ) [2{c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}]
-<Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-6-1.pdf, id=25, 469.755pt x 325.215pt>
-File: Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-6-1.pdf Graphic file (type pdf)
-<use Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-6-1.pdf>
-Package pdftex.def Info: Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-6-1.pdf  used on input line 296.
+Overfull \hbox (0.13916pt too wide) in alignment at lines 304--334
+ [] [] [] [] [] [] [] [] [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (0.13916pt too wide) in alignment at lines 334--363
+ [] [] [] [] [] [] [] [] [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (0.13916pt too wide) in alignment at lines 363--365
+ [] [] [] [] [] [] [] [] [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (4.04622pt too wide) in paragraph at lines 366--366
+[]|\T1/lmr/m/n/10 (-20) DesvStd|  
+ []
+
+
+Overfull \hbox (2.69212pt too wide) in paragraph at lines 366--366
+ []|\T1/lmr/m/n/10 (-20) 1.8075|
+ []
+
+
+Overfull \hbox (2.69212pt too wide) in paragraph at lines 366--366
+ []|\T1/lmr/m/n/10 (-20) 1.3200|
+ []
+
+
+Overfull \hbox (2.69212pt too wide) in paragraph at lines 366--366
+ []|\T1/lmr/m/n/10 (-20) 1.1330|
+ []
+
+
+Overfull \hbox (2.69212pt too wide) in paragraph at lines 366--366
+ []|\T1/lmr/m/n/10 (-20) 1.0692|
+ []
+
+
+Overfull \hbox (2.69212pt too wide) in paragraph at lines 366--366
+ []|\T1/lmr/m/n/10 (-20) 1.0194|
+ []
+
+
+Overfull \hbox (2.69212pt too wide) in paragraph at lines 366--366
+ []|\T1/lmr/m/n/10 (-20) 0.9731|
+ []
+
+
+Overfull \hbox (2.69212pt too wide) in paragraph at lines 366--366
+ []|\T1/lmr/m/n/10 (-20) 0.9607|
+ []
+
+
+Overfull \hbox (2.69212pt too wide) in paragraph at lines 367--367
+ []|\T1/lmr/m/n/10 (-20) 0.9279|
+ []
+
+
+Overfull \hbox (2.69212pt too wide) in paragraph at lines 367--367
+ []|\T1/lmr/m/n/10 (-20) 0.6349|
+ []
+
+
+Overfull \hbox (2.69212pt too wide) in paragraph at lines 367--367
+ []|\T1/lmr/m/n/10 (-20) 0.6065|
+ []
+
+
+Overfull \hbox (2.69212pt too wide) in paragraph at lines 367--367
+ []|\T1/lmr/m/n/10 (-20) 0.1213|
+ []
+
+
+Overfull \hbox (2.69212pt too wide) in paragraph at lines 367--368
+ []|\T1/lmr/m/n/10 (-20) 0.0887|
+ []
+
+
+Overfull \hbox (4.57344pt too wide) in paragraph at lines 368--368
+[]|\T1/lmr/m/n/10 (-20) PropVar|  
+ []
+
+
+Overfull \hbox (2.69212pt too wide) in paragraph at lines 368--368
+ []|\T1/lmr/m/n/10 (-20) 0.2722|
+ []
+
+
+Overfull \hbox (2.69212pt too wide) in paragraph at lines 368--368
+ []|\T1/lmr/m/n/10 (-20) 0.1452|
+ []
+
+
+Overfull \hbox (2.69212pt too wide) in paragraph at lines 368--368
+ []|\T1/lmr/m/n/10 (-20) 0.1070|
+ []
+
+
+Overfull \hbox (2.69212pt too wide) in paragraph at lines 368--368
+ []|\T1/lmr/m/n/10 (-20) 0.0953|
+ []
+
+
+Overfull \hbox (2.69212pt too wide) in paragraph at lines 368--368
+ []|\T1/lmr/m/n/10 (-20) 0.0866|
+ []
+
+
+Overfull \hbox (2.69212pt too wide) in paragraph at lines 368--368
+ []|\T1/lmr/m/n/10 (-20) 0.0789|
+ []
+
+
+Overfull \hbox (2.69212pt too wide) in paragraph at lines 368--368
+ []|\T1/lmr/m/n/10 (-20) 0.0769|
+ []
+
+
+Overfull \hbox (2.69212pt too wide) in paragraph at lines 369--369
+ []|\T1/lmr/m/n/10 (-20) 0.0717|
+ []
+
+
+Overfull \hbox (2.69212pt too wide) in paragraph at lines 369--369
+ []|\T1/lmr/m/n/10 (-20) 0.0336|
+ []
+
+
+Overfull \hbox (2.69212pt too wide) in paragraph at lines 369--369
+ []|\T1/lmr/m/n/10 (-20) 0.0307|
+ []
+
+
+Overfull \hbox (2.69212pt too wide) in paragraph at lines 369--369
+ []|\T1/lmr/m/n/10 (-20) 0.0012|
+ []
+
+
+Overfull \hbox (2.69212pt too wide) in paragraph at lines 369--370
+ []|\T1/lmr/m/n/10 (-20) 0.0007|
+ []
+
+
+Overfull \hbox (14.35701pt too wide) in paragraph at lines 370--370
+[]|\T1/lmr/m/n/10 (-20) PropAcum|  
+ []
+
+
+Overfull \hbox (2.69212pt too wide) in paragraph at lines 370--370
+ []|\T1/lmr/m/n/10 (-20) 0.2722|
+ []
+
+
+Overfull \hbox (2.69212pt too wide) in paragraph at lines 370--370
+ []|\T1/lmr/m/n/10 (-20) 0.4174|
+ []
+
+
+Overfull \hbox (2.69212pt too wide) in paragraph at lines 370--370
+ []|\T1/lmr/m/n/10 (-20) 0.5244|
+ []
+
+
+Overfull \hbox (2.69212pt too wide) in paragraph at lines 370--370
+ []|\T1/lmr/m/n/10 (-20) 0.6197|
+ []
+
+
+Overfull \hbox (2.69212pt too wide) in paragraph at lines 370--370
+ []|\T1/lmr/m/n/10 (-20) 0.7063|
+ []
+
+
+Overfull \hbox (2.69212pt too wide) in paragraph at lines 370--370
+ []|\T1/lmr/m/n/10 (-20) 0.7852|
+ []
+
+
+Overfull \hbox (2.69212pt too wide) in paragraph at lines 370--371
+ []|\T1/lmr/m/n/10 (-20) 0.8621|
+ []
+
+
+Overfull \hbox (2.69212pt too wide) in paragraph at lines 371--371
+ []|\T1/lmr/m/n/10 (-20) 0.9339|
+ []
+
+
+Overfull \hbox (2.69212pt too wide) in paragraph at lines 371--371
+ []|\T1/lmr/m/n/10 (-20) 0.9675|
+ []
+
+
+Overfull \hbox (2.69212pt too wide) in paragraph at lines 371--371
+ []|\T1/lmr/m/n/10 (-20) 0.9981|
+ []
+
+
+Overfull \hbox (2.69212pt too wide) in paragraph at lines 371--371
+ []|\T1/lmr/m/n/10 (-20) 0.9993|
+ []
+
+
+Overfull \hbox (2.69212pt too wide) in paragraph at lines 371--372
+ []|\T1/lmr/m/n/10 (-20) 1.0000|
+ []
+
+
+Overfull \hbox (0.13916pt too wide) in alignment at lines 365--372
+ [] [] [] [] [] [] [] [] [] [] [] [] [] 
+ []
+
+<Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-5-1.pdf, id=25, 469.755pt x 325.215pt>
+File: Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-5-1.pdf Graphic file (type pdf)
+<use Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-5-1.pdf>
+Package pdftex.def Info: Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-5-1.pdf  used on input line 378.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [3]
-LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 301.
-(c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
-File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-)
-Overfull \hbox (2.7436pt too wide) in paragraph at lines 319--319
-[]\T1/lmtt/m/n/10 ## Factor analysis with Call: fa(r = cor(df_full[, -9]), nfactors = 5, rotate = "oblimin",[] 
- []
-
-<Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-7-1.pdf, id=31, 469.755pt x 325.215pt>
+<Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-6-1.pdf, id=33, 469.755pt x 325.215pt>
+File: Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-6-1.pdf Graphic file (type pdf)
+<use Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-6-1.pdf>
+Package pdftex.def Info: Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-6-1.pdf  used on input line 407.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+[4 <./Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-5-1.pdf>]
+<Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-7-1.pdf, id=47, 469.755pt x 325.215pt>
 File: Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-7-1.pdf Graphic file (type pdf)
 <use Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-7-1.pdf>
-Package pdftex.def Info: Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-7-1.pdf  used on input line 321.
+Package pdftex.def Info: Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-7-1.pdf  used on input line 424.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[4 <./Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-6-1.pdf>]
-Overfull \hbox (39.4935pt too wide) in paragraph at lines 325--325
-[]\T1/lmtt/m/n/10 ## Parallel analysis suggests that the number of factors =  5  and the number of components =  NA[] 
- []
-
-<Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-7-2.pdf, id=44, 469.755pt x 325.215pt>
-File: Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-7-2.pdf Graphic file (type pdf)
-<use Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-7-2.pdf>
-Package pdftex.def Info: Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-7-2.pdf  used on input line 327.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[5 <./Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-7-1.pdf>]
-<Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-8-1.pdf, id=55, 469.755pt x 325.215pt>
+[5 <./Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-6-1.pdf>]
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 442.
+(c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
+File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+) [6 <./Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-7-1.pdf>]
+<Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-8-1.pdf, id=74, 469.755pt x 325.215pt>
 File: Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-8-1.pdf Graphic file (type pdf)
 <use Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-8-1.pdf>
-Package pdftex.def Info: Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-8-1.pdf  used on input line 332.
+Package pdftex.def Info: Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-8-1.pdf  used on input line 493.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[6 <./Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-7-2.pdf>] [7 <./Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-8-1.pdf>] (./Proyecto_Final_AM.aux)
+[7]
+Overfull \hbox (39.4935pt too wide) in paragraph at lines 497--497
+[]\T1/lmtt/m/n/10 ## Parallel analysis suggests that the number of factors =  6  and the number of components =  NA[] 
+ []
+
+<Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-8-2.pdf, id=80, 469.755pt x 325.215pt>
+File: Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-8-2.pdf Graphic file (type pdf)
+<use Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-8-2.pdf>
+Package pdftex.def Info: Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-8-2.pdf  used on input line 499.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+[8 <./Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-8-1.pdf>]
+<Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-9-1.pdf, id=91, 469.755pt x 325.215pt>
+File: Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-9-1.pdf Graphic file (type pdf)
+<use Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-9-1.pdf>
+Package pdftex.def Info: Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-9-1.pdf  used on input line 504.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+[9 <./Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-8-2.pdf>] [10 <./Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-9-1.pdf>] (./Proyecto_Final_AM.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-04-28>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 15019 strings out of 469331
- 242688 string characters out of 5464601
- 699377 words of memory out of 5000000
- 43531 multiletter control sequences out of 15000+600000
- 669192 words of font info for 94 fonts, out of 8000000 for 9000
+ 15065 strings out of 469331
+ 244370 string characters out of 5464601
+ 712663 words of memory out of 5000000
+ 43550 multiletter control sequences out of 15000+600000
+ 670105 words of font info for 105 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 83i,7n,93p,1014b,536s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 83i,8n,93p,1014b,705s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx10.pfb><c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr17.pfb><c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb><c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb>
-Output written on Proyecto_Final_AM.pdf (7 pages, 866971 bytes).
+Output written on Proyecto_Final_AM.pdf (10 pages, 4740621 bytes).
 PDF statistics:
- 156 PDF objects out of 1000 (max. 8388607)
- 121 compressed objects within 2 object streams
- 20 named destinations out of 1000 (max. 500000)
- 24685 words of extra memory for PDF output out of 24883 (max. 10000000)
+ 195 PDF objects out of 1000 (max. 8388607)
+ 144 compressed objects within 2 object streams
+ 25 named destinations out of 1000 (max. 500000)
+ 24703 words of extra memory for PDF output out of 24883 (max. 10000000)
 
