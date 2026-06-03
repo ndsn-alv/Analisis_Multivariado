@@ -25,6 +25,8 @@ library(GGally)
 library(psych)
 library(kableExtra)
 library(patchwork)
+library(caret)
+library(MASS)
 
 ca_svd = function(x){
   
@@ -165,9 +167,16 @@ plotFA=function(fa_mod,threshold=0,oblique=F,nodesNames=NULL){
 ```{r}
 
 ile <- read.csv("https://raw.githubusercontent.com/ndsn-alv/Analisis_Multivariado/main/Data/ile_limpio.csv")
-
+  
 ile_imp <- read.csv("https://raw.githubusercontent.com/ndsn-alv/Analisis_Multivariado/main/Data/ile_imp.csv")
+  
+# identificar columnas en común
+cols_comunes <- intersect(names(ile), names(ile_imp))
 
+# reemplazar en ile
+ile[cols_comunes] <- ile_imp[cols_comunes]
+
+ile$numero_iles <- ile$numero_iles - 1
 
 ```
 
@@ -222,16 +231,15 @@ Se tienen 17730 observaciones de 42 variables y tres tipos de variables:
 
 # 3. Análisis descriptivo
 
-A partir de ahora es necesario hacer un selección de variables. Eliminando variables que no aportan valor analítico (fechas, parentesco, alcaldia / municipio, etc.). 
+A partir de ahora es necesario hacer un selección de variables. 
 
-Se toma en cuenta que las semanas de embarazo se miden por fecha de ultima menstruación que contiene muchos NAs. Se opta mejor usar la gestación por USG y convertir *semanas_gestacion_usg* a dias, multiplicando por 7 y sumando la columna *dias_gestacion_usg*.
 
 ```{r}
 
-ile$dias_gestacion_usg <- ifelse(
+ile$semanas_gestacion_usg <- ifelse(
   !is.na(ile$dias_gestacion_usg),
-  ile$semanas_gestacion_usg * 7 + ile$dias_gestacion_usg,
-  ile$semanas_gestacion_usg * 7
+  ile$semanas_gestacion_usg + ile$dias_gestacion_usg / 7,
+  ile$semanas_gestacion_usg
 )
 
 ```
@@ -244,6 +252,9 @@ ile$dias_gestacion_usg <- ifelse(
 - ocupacion
 - religion
 - entidad
+- alcaldia / municipio
+- parentesco
+
 
 **B. Historia reproductiva**
 
@@ -260,43 +271,39 @@ ile$dias_gestacion_usg <- ifelse(
 
 - anio
 - mes
+- fecha_ingreso
 - institucion_derechohab
-- dias_gestacion_usg
+- referida
+- recibio_consejeria
+- fecha_primera_valoracion
+- numero_consultas
+- motivos_interrupcion
+- fecha_ingreso_hosp
+- fecha_egreso_hosp
+- firma_consentimiento
+- desc_servicio
+- fecha_cierre
 - procedimiento_ile
 
-**D. Resultado clínico**
+**D. Estado del embarazo actual**
+
+- semanas_gestacion_usg / dias_gestacion_usg
+- semanas_embarazo
+- fecha_ultima_menstruacion
+
+**E. Resultado clínico**
 
 - se_complica
 - con_dolor
 - analgesico
 - resultado_ile
 
-**E. Conducta anticonceptiva**
+**F. Conducta anticonceptiva**
 
 - uso_anticonceptivo
 - anticonceptivo_post
 
 ```{r}
-
-ile <- ile %>%
-  select(
-    # Tiempo
-    anio, mes,
-    
-    # A. Perfil sociodemográfico
-    edad, estado_civil, nivel_edu, ocupacion, religion, entidad,
-    
-    # B. Historia reproductiva
-    edad_primera_menstruacion, edad_inicio_vida_sexual,
-    numero_embarazos, numero_hijos, numero_abortos,
-    numero_partos, numero_cesareas, numero_iles,
-    
-    # D. Uso de servicios y proceso clínico
-    numero_consultas, semanas_gestacion_usg ,dias_gestacion_usg,semanas_embarazo, procedimiento_ile,     institucion_derechohab,
-    
-    # E. Resultado clínico
-    se_complica, con_dolor, analgesico
-  )
 
 n_total <- nrow(ile)
 
@@ -315,6 +322,8 @@ kable(
 
 ```
 
+Notamos que 
+
 # 4. Análisis de componentes principales (PCA)
 
 Como primera técnica de reducción de dimensión realizaremos un análisis sobre los componentes principales exclusivamente sobre las variables numéricas. Obteniendo las siguientes características:
@@ -323,52 +332,47 @@ Como primera técnica de reducción de dimensión realizaremos un análisis sobr
 
 # Incluir variable de color
 
-df_full <- ile[,c(
+ile_num <- ile[,c(
   "edad_inicio_vida_sexual", "edad_primera_menstruacion","numero_hijos", "numero_embarazos","numero_partos",
   "numero_abortos", "numero_cesareas", "numero_iles",
-  "edad", "numero_consultas", "semanas_embarazo", "semanas_gestacion_usg","dias_gestacion_usg",
-  "estado_civil"
+  "edad", "numero_consultas", "semanas_embarazo", "semanas_gestacion_usg"
 )]
 
 # Eliminar NA de forma consistente
-df_full <- na.omit(df_full)
-
-# Separar
-color_var <- df_full$edad
-df <- df_full %>% select(-dias_gestacion_usg, - estado_civil)
+ile_num <- na.omit(ile_num)
 
 # PCA
-pca <- prcomp(df, scale. = TRUE)
-imp <- summary(pca)$importance
+pca <- prcomp(ile_num, scale. = TRUE)
+pca_imp <- summary(pca)$importance
 
-df_pca <- data.frame(
-  Componente = colnames(imp),
-  DesvStd    = imp["Standard deviation", ],
-  PropVar    = imp["Proportion of Variance", ],
-  PropAcum   = imp["Cumulative Proportion", ]
+ile_pca <- data.frame(
+  Componente = colnames(pca_imp),
+  DesvStd    = pca_imp["Standard deviation", ],
+  PropVar    = pca_imp["Proportion of Variance", ],
+  PropAcum   = pca_imp["Cumulative Proportion", ]
 )
 
-df_pca_t <- as.data.frame(t(df_pca[,-1]))
-colnames(df_pca_t) <- df_pca$Componente
+ile_pca_t <- as.data.frame(t(ile_pca[,-1]))
+colnames(ile_pca_t) <- ile_pca$Componente
 
 kable(
-  df_pca_t,
+  ile_pca_t,
   caption = "Importancia de los componentes principales",
   digits = 4
 )
 
 ```
 
-Podemos ver que 5 dimensiones son suficientes para explicar mas del 70% de la varianza de los datos. Podemos visualizar los datos haciendo proyecciones en el plano para cada combinación de dimensiones.
+Podemos ver que 5 dimensiones son suficientes para explicar casi el 70% de la varianza de los datos. Podemos visualizar los datos haciendo proyecciones en el plano para cada combinación de dimensiones.
 
 ```{r}
 # Biplot coloreado
 
 color_var <- list(
-  embarazos = df_full$numero_embarazos, 
-  gestacion = df_full$semanas_gestacion_usg, 
-  vida_sexual = df_full$edad_inicio_vida_sexual,
-  edad = df_full$edad
+  embarazos = ile_num$numero_embarazos, 
+  gestacion = ile_num$semanas_gestacion_usg, 
+  vida_sexual = ile_num$edad_inicio_vida_sexual,
+  edad = ile_num$edad
 ) 
 
 bp1 <- fviz_pca_biplot(
@@ -420,7 +424,7 @@ bp4 <- fviz_pca_biplot(
   geom = "point",
   col.ind = color_var$edad,
   gradient.cols = c("yellow","orange", "darkred", "black"),
-  title = "Embarazos vs. abortos e iles",
+  title = "Embarazos vs. consultas",
   ggtheme = theme_minimal(),
   repel = T,
   col.var = "black",
@@ -460,9 +464,9 @@ bp7 <- fviz_pca_biplot(
   pca,
   axes = c(2,5),
   geom = "point",
-  col.ind = color_var$embarazos,
+  col.ind = color_var$gestacion,
   gradient.cols = c("yellow","orange", "darkred", "black"),
-  title = "Gestación_usg vs. abortos e iles",
+  title = "Gestación_usg vs. consultas",
   ggtheme = theme_minimal(),
   repel = T,
   col.var = "black",
@@ -488,9 +492,9 @@ bp9 <- fviz_pca_biplot(
   pca,
   axes = c(3,5),
   geom = "point",
-  col.ind = color_var$embarazos,
+  col.ind = color_var$vida_sexual,
   gradient.cols = c("yellow","orange", "darkred", "black"),
-  title = "Inicio_vida_sexual vs. abortos e iles",
+  title = "Inicio_vida_sexual vs. consultas",
   ggtheme = theme_minimal(),
   repel = T,
   col.var = "black",
@@ -504,7 +508,7 @@ bp10 <- fviz_pca_biplot(
   geom = "point",
   col.ind = color_var$embarazos,
   gradient.cols = c("yellow","orange", "darkred", "black"),
-  title = "Partos y cesareas vs. abortos e iles",
+  title = "Partos y cesareas vs. consultas",
   ggtheme = theme_minimal(),
   repel = T,
   col.var = "black",
@@ -522,40 +526,97 @@ Notese que los datos estan coloreados por edad. Facilmente podemos interpretar c
 - **Dim. 2:** Orden en las semanas de gestación USG.
 - **Dim. 3:** Orden en edad de inicio de vida sexual.
 - **Dim. 4:** Comparación entre número de partos y cesáreas (nacimientos).
-- **Dim. 5:** Comparación entre número de abortos e ILEs.
+- **Dim. 5:** Distinición del número de consultas.
 
-La proyección nos permite visualizar una relación entre cada una de las dimensiones, lo cual nos permite identificar grupos. Estos grupos forman patrones en forma de "escamas" y claramente indican el grupo de mujeres con la misma cantidad de embarazos. Estos grupos son mas grandes ya que solo distingue embarazos. Sin embargo, cada "escama" de las últimos grupos (comparación entre partos-cesareas y abortos-iles) pueden interpretarse como grupos de mujeres con una cierta cantidad de partos y cesareas (análogamente, abortos e iles).
+La proyección nos permite visualizar una relación entre cada una de las dimensiones, lo cual nos permite identificar grupos. Estos grupos forman patrones en forma de "escamas" y claramente indican el grupo de mujeres con la misma cantidad de embarazos con una distinción gradual por la edad (ya que el vector de edad y numero_embarazos van a direcciones similares). Estos grupos son mas grandes ya que solo distingue embarazos. Sin embargo, cada "escama" en la tercera gráfica (comparación entre partos-cesareas) pueden interpretarse como grupos de mujeres con una cierta combinación de partos y cesareas.
 
 ```{r}
 wrap_plots(bp5, bp6, bp7, ncol = 2)
 
 ```
 
-Se puede ver claramente la relación de las dimensiones. Para el primer gráfico, la edad no sirve para identificar grupos así que se opto por colorear por edad de inicio de vida sexual para visualizar el orden en las edades de inicio de la vida sexual, manteniendo una forma piramidal cuya base representa la edad promedio entre 10 y 20 años y punta al edad mas grande registrada (+40 años). Tambien hay una poca cantidad de puntos cuya edad de incio de vida sexual es menor a 10.
+Se puede ver claramente la relación de las dimensiones. Para el primer gráfico, la edad no sirve para identificar grupos (dispersión unforme) así que se opto por colorear por edad de inicio de vida sexual para visualizar el orden en las edades al inicio de la vida sexual, manteniendo una forma piramidal cuya base representa la edad promedio entre 10 y 20 años y punta al edad mas grande registrada (+40 años). Tambien hay una poca cantidad de puntos cuya edad de incio de vida sexual es menor a 10.
 
-Para los últimos dos gráficos se coloreo por embarazos, mostrando que las mujeres con menos embarazos se distribuyen en el centro del eje e incluyen valores de partos y cesareas equilibrados. La tendencia hacia arriba o hacia abajo depende del numero de partos y cesareas, respectivamente. Análogamente ocurre lo mismo en el caso de abortos e ILEs. 
+Para la segunda gráfica se coloreó por embarazos, mostrando que las mujeres con menos embarazos se distribuyen en el centro del eje e incluyen valores de partos y cesareas equilibrados. La tendencia hacia arriba o hacia abajo depende del numero de cesareas y partos, respectivamente.
+
+Para la tercera gráfica se observan cuatro grupos que representan el número de consultas (0 a 3 consultas). Con un degradado que representa las semanas de gestación. Se aprecia que para los grupos superiores (0 y 1 consulta) hay mas concentración de mujeres con muchas semanas de gestación, lo cual es consistente con el hecho de que a mayor semanas de gestación mayor prioridad.
 
 ```{r}
 wrap_plots(bp8, bp9, bp10, ncol = 2)
 
 ```
+En la primera y tercera gráfica (coloreados por embarazos) mantiene un comportamiento muy similar a la del grupo pasado de gráficas. Sin embargo, se aprecian unas cuentas observaciones separadas del lado izquierdo, representando a las mujeres con mayor cantidad de embarazos que a su vez iniciaron su vida sexual a temprana edad.
 
-Este grupo de gráficas también estan coloreadas por embarazos. En las primeras dos gráficas se mantiene un comportamiento muy similar a la del grupo pasado de gráficas. Sin embargo, se aprecian unas cuentas observaciones separadas del lado izquierdo, representando a las mujeres con mayor cantidad de embarazos que a su vez iniciaron su vida sexual a temprana edad.
-
-Para la última gráfica se observó que los grupos (numero de embarazos) son de forma elíptica por capas. Siendo las capas exteriores las mujeres con mayores embarazos y el núcleo como la concentración de menores embarazos. Los puntos cercanos a los ejes podrian ser un equilibrio entre partos, cesareas, abortos e iles.
+Para la segunda gráfica (coloreada por edad de inicio de vida sexual). Representa una relación entre el inicio de la vida sexual con el número de consultas. No hay patrones evidentes en esta proyección.
 
 # 5. Análisis exploratorio de factores (EFA)
 
+Se realiza un análisis exploratorio de factores estimando los factores por el método de factores principales. Para escoger el número de factores realizamos una Parallel Anlaysis Scree Plot.
+
 ```{r}
-efa <- fa(r=cor(df),nfactors=6,fm="pa",rotate="oblimin")
-
-efa
-
-fa.parallel(df, fm = "pa", fa = "fa")
-
-plotFA(efa,nodesNames=colnames(df),threshold=.20, oblique = T)
+fa.parallel(ile_num, fm = "pa", fa = "fa")
 
 ```
+
+Donde se considera que 6 factores pueden ser suficientes. Utilizando una rotación varimax tenemos las siguientes características del modelo.
+
+```{r}
+efa <- fa(r=cor(ile_num),nfactors=6,fm="pa",rotate="varimax")
+
+efa_var <- as.data.frame(efa$Vaccounted)
+
+kable(
+  efa_var,
+  caption = "Varianza explicada por EFA",
+  digits = 4
+)
+
+
+```
+
+Observamos que 6 factores acumulan el aproximadamente el 67% de la varianza de los datos, por lo cual el modelo es adecuado. Obtenemos las siguientes cargas. 
+
+```{r}
+# matriz de cargas
+cargas <- data.frame(
+  efa$loadings[],
+  h2 = efa$communality,
+  u2 = efa$uniquenesses
+)
+
+cargas <- round(cargas, 3)
+
+kable(
+  cargas,
+  caption = "Cargas, comunalidad y unicidad del EFA"
+)
+
+```
+
+Podemos interpretar los factores com:
+
+- **F1:** Nacimientos naturales y edad. Presenta correlación fuerte con hijos, embarazos y partos. Correlación moderada con edad.
+
+- **F2:** Estado del embarazo actual. Correlación fuerte con gestación y moderada con semanas de embarazo. Correlación leve con número de consultas.
+
+- **F3:** Nacimientos por cesarea. Este nos presenta alta correlación con cesareas y correlación moderada con partos (podría indicar una comparación entre ambos). Correlación baja con hijos, embarazos y edad.
+
+- **F4:** Índice de abortos. Presenta correlación fuerte con abortos y moderada con embarazos. 
+
+- **F5:** Índice de ILEs. Presenta correlación fuerte con ILEs y moderada con embarazos.
+
+- **F6:** Edad e historial reproductivo. Correlación fuerte con inicio de vida sexual, moderada con edad y correlación leve con primera menstruación.
+
+Cortando las correlaciones no significativas $(>|.3|)$ obtenemos el siguiente diagrama. En el cual podemos ver que el número de consultas y el edad de primera menstruación no son fuertemente asociados a ningun factor y mantienen unicidad alta.  
+
+
+```{r, fig.width=6, fig.height=4}
+
+plotFA(efa, nodesNames = colnames(ile_num),
+       threshold = .3, oblique = FALSE)
+```
+
+
 
 # 6. Análisis de correspondencias (CA)
 
@@ -602,6 +663,43 @@ ggplot(ca_cat, aes(x = x, y = y)) +
 # 7. Análisis de conglomerados (Clustering)
 
 # 8. Análisis de discriminantes (AC)
+
+Vamos a intentar predecir si una nueva observación tiende a complicarse o no, dependiendo del procedimiento utilizado. Para ello, se considerarán las variables: tipo de procedimiento de ILE (medicamento o aspiración endouterina) y la presencia o ausencia de complicaciones.
+
+```{r}
+
+ile_lda <- ile %>% 
+  dplyr::select(con_dolor, edad, numero_embarazos, semanas_embarazo) %>%
+  drop_na() # Limpiamos los NA's
+
+# Aseguramos que la variable a predecir sea tratada como factor
+ile_lda$con_dolor <- as.factor(ile_lda$con_dolor)
+
+# Dividimos los datos: 70% para entrenar el modelo y 30% para probarlo
+set.seed(123)
+train_idx <- sample(1:nrow(ile_lda), 0.7 * nrow(ile_lda))
+datos_train <- ile_lda[train_idx, ]
+datos_test <- ile_lda[-train_idx, ]
+
+# Ajustamos el Análisis 
+modelo_lda <- lda(con_dolor ~ edad + numero_embarazos + semanas_embarazo, data = datos_train)
+
+# Visualizamos las probabilidades apriori y los coeficientes 
+print(modelo_lda)
+
+# Realizamos predicciones sobre el 30% de datos de prueba
+predicciones <- predict(modelo_lda, datos_test)
+
+# Generamos la Matriz de Confusión para evaluar qué tan bien predice
+matriz_confusion <- confusionMatrix(predicciones$class, datos_test$con_dolor)
+
+print(matriz_confusion$table)
+cat("\nPrecisión Global (Accuracy):", round(matriz_confusion$overall['Accuracy'] * 100, 2), "%\n")
+```
+
+El modelo falló en su tarea de discriminación. Debido a que las variables de entrada (edad, número de embarazos, semanas de embarazo) tienen distribuciones casi idénticas en ambos grupos, el algoritmo no pudo trazar una frontera de decisión clara.
+
+Además, debido al fuerte desbalance de clases, el modelo optó por predecir siempre la clase mayoritaria. Para este caso de estudio, el perfil obstétrico y la edad no son discriminantes válidos para predecir el dolor.
 
 # 9. Resultados 
 
