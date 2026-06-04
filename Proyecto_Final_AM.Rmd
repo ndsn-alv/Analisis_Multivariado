@@ -621,84 +621,170 @@ plotFA(efa, nodesNames = colnames(ile_num),
        threshold = .3, oblique = FALSE)
 ```
 
-
-
-# 6. Análisis de correspondencias (CA)
-
+# 6. Análisis de correspondencias múltiple (MCA)
 
 ```{r}
 ## Se elimina: referida, motivo_ile, alcaldia / municipio, recibio_consejeria
 
 ile_cat <- ile %>%
-  dplyr::select(anio, mes, estado_civil, referida, 
+  dplyr::select(estado_civil, referida, 
                 institucion_derechohab, nivel_edu,
                 ocupacion, religion, entidad,
                 recibio_consejeria, se_complica,firma_consentimiento,
-                con_dolor, analgesico, procedimiento_ile) %>%
-    mutate(across(everything(), as.factor))
+                con_dolor, analgesico, procedimiento_ile, edad_inicio_vida_sexual, edad_primera_menstruacion, edad, numero_embarazos, numero_hijos, numero_abortos, numero_iles, numero_partos, numero_cesareas) %>%
+  mutate(
+    estado_civil = case_when(
+      estado_civil %in% c("Casada", "Unión libre") ~ "Con pareja",
+      estado_civil %in% c("Divorciada", "Separada", "Soltera", "Viuda") ~ "Sin pareja",
+      TRUE ~ NA
+    ),
 
-ile_cat <- ile_cat %>% mutate(a = case_when(
-  se_complica == "Si" & con_dolor == "Si" & analgesico == "Si" ~ "SSS",
-  se_complica == "Si" & con_dolor == "Si" & analgesico == "No" ~ "SSN",
-  se_complica == "Si" & con_dolor == "No" & analgesico == "Si" ~ "SNS",
-  se_complica == "Si" & con_dolor == "No" & analgesico == "No" ~ "SNN",
-  se_complica == "No" & con_dolor == "Si" & analgesico == "Si" ~ "NSS",
-  se_complica == "No" & con_dolor == "Si" & analgesico == "No" ~ "NSN",
-  se_complica == "No" & con_dolor == "No" & analgesico == "Si" ~ "NNS",
-  se_complica == "No" & con_dolor == "No" & analgesico == "No" ~ "NNN"
-))
+    institucion_derechohab = case_when(
+      institucion_derechohab %in% c("IMSS", "ISSSTE", "Otra", "Seguro Popular") ~ "Alguno",
+      institucion_derechohab == "Ninguno" ~ "Ninguno",
+      TRUE ~ NA
+    ),
 
-# ile_cat <- ile_cat %>%
-#  mutate(estado_civil = case_when(
-#    estado_civil %in% c("Casada", "Unión libre") ~ "Con pareja",
-#   estado_civil %in% c("Divorciada", "Separada", "Soltera", "Viuda") ~ "Sin pareja",
-#    TRUE ~ "Sin especificar"
-#  )) %>% 
-#  mutate(institucion_derechohab = case_when(
-#    institucion_derechohab %in% c("IMSS", "ISSSTE", "Otra", "Seguro Popular") ~ "Alguno",
-#    institucion_derechohab %in% c("Ninguno") ~ "Ninguno",
-#    TRUE ~ "No especificado"
-#  )) %>%
-#  mutate(nivel_edu = case_when(
-#    nivel_edu %in% c("Licenciatura", "Maestría") ~ "Licenciatura o superior",
-#    nivel_edu %in% c("Preparatoria") ~ "Preparatoria",
-#    TRUE ~ "Secundaria o inferior"
-#  )) %>%
-#  mutate(religion = case_when(
-#    religion %in% c("Católica") ~ "Católica",
-#    religion %in% c("Ninguna") ~ "Ninguna",
-#    TRUE ~ "Otra"
-#  )) %>% 
-#  mutate(entidad = case_when(
-#    entidad %in% c("Ciudad de México", "Estado de México") ~ entidad,
-#    TRUE ~ "Otro"
-#  ))
+    nivel_edu = case_when(
+      nivel_edu %in% c("Licenciatura", "Maestría") ~ "Licenciatura o superior",
+      nivel_edu == "Preparatoria" ~ "Preparatoria",
+      nivel_edu %in% c("Primaria", "Secundaria") ~ "Secundaria o inferior",
+      TRUE ~ NA
+    ),
 
-ile_cat <- ile_cat %>% dplyr::select(-se_complica, -con_dolor, -analgesico)
+    religion = case_when(
+      religion == "Católica" ~ "Católica",
+      religion == "Ninguna" ~ "Ninguna",
+      TRUE ~ NA
+    ),
+
+    entidad = case_when(
+      entidad %in% c("Ciudad de México", "Estado de México") ~ entidad,
+      TRUE ~ NA
+    ),
+
+    ocupacion = case_when(
+      ocupacion %in% c("Desempleada", "Empleada", "Estudiante", "Trabajadora del hogar no remunerada") ~ ocupacion,
+      TRUE ~ NA
+    ),
+
+    analgesico_dolor = case_when(
+      con_dolor == "Si" & analgesico == "Si" ~ "SS",
+      con_dolor == "Si" & analgesico == "No" ~ "SN",
+      con_dolor == "No" & analgesico == "Si" ~ "NS",
+      con_dolor == "No" & analgesico == "No" ~ "NN",
+      TRUE ~ NA
+    ),
+
+    edad = case_when(
+      edad >= 12 & edad <= 17 ~ "12-17",
+      edad >= 18 & edad <= 24 ~ "18-24",
+      edad >= 25 & edad <= 34 ~ "25-34",
+      edad >= 35 ~ "35+",
+      TRUE ~ NA
+    ),
+
+    edad_inicio_vida_sexual = case_when(
+      is.na(edad_inicio_vida_sexual) ~ NA_character_,
+      edad_inicio_vida_sexual <= 11 ~ "11-",
+      edad_inicio_vida_sexual <= 14 ~ "12-14",
+      edad_inicio_vida_sexual <= 16 ~ "15-16",
+      edad_inicio_vida_sexual <= 18 ~ "17-18",
+      edad_inicio_vida_sexual >= 19 ~ "19+"
+    ),
+
+    edad_primera_menstruacion = case_when(
+      is.na(edad_primera_menstruacion) ~ NA_character_,
+      edad_primera_menstruacion <= 8 ~ "8-",
+      edad_primera_menstruacion <= 10 ~ "9-10",
+      edad_primera_menstruacion <= 12 ~ "11-12",
+      edad_primera_menstruacion <= 14 ~ "13-14",
+      edad_primera_menstruacion >= 15 ~ "15+"
+    )
+  ) %>% mutate(
+  numero_embarazos = case_when(
+    numero_embarazos >= 5 ~ "5+",
+    TRUE ~ as.character(numero_embarazos)
+  ),
+  numero_iles = case_when(
+    numero_iles >= 1 ~ "1+",
+    TRUE ~ as.character(numero_iles)
+  ),
+  numero_abortos = case_when(
+    numero_abortos >= 2 ~ "2+",
+    TRUE ~ as.character(numero_abortos)
+  ),
+  numero_hijos = case_when(
+    numero_hijos >= 3 ~ "3+",
+    TRUE ~ as.character(numero_hijos)
+  ),
+  numero_partos = case_when(
+    numero_partos >= 3 ~ "3+",
+    TRUE ~ as.character(numero_partos)
+  ),
+  numero_cesareas = case_when(
+    numero_cesareas >= 2 ~ "2+",
+    TRUE ~ as.character(numero_cesareas)
+  )
+) %>% dplyr::select(
+  -analgesico, -con_dolor, -referida, -firma_consentimiento, -recibio_consejeria, 
+  -entidad, -edad_inicio_vida_sexual, -edad_primera_menstruacion, - numero_embarazos, -numero_hijos)
 
 ile_mca <- MCA(ile_cat, graph = FALSE)
 
-fviz_mca_ind(
+color_var <- ile_cat$analgesico_dolor
+
+mcav1 <- fviz_mca_var(
   ile_mca,
-  geom = "point",     # solo puntos
-  pointsize = 1,      # tamaño del punto
-  label = "none",      # sin texto
-  habillage = ile_cat$a
+  axes = c(1,2),
+  geom = c("point", "text") ,     
+  pointsize = 1,
+  labelsize = 2
 )
 
-
-```
-```{r}
-ile_mca <- MCA(ile_cat, graph = FALSE)
-
-fviz_mca_ind(
+mcabp1 <- fviz_mca_biplot(
+  axes = c(1,2),
   ile_mca,
-  geom = "point",     # solo puntos
-  pointsize = 1,      # tamaño del punto
-  label = "none",      # sin texto
-  habillage = ile_cat$anio
+  geom = "point",
+  pointsize = 1,
+  habillage = color_var
 )
 
+mcav2 <- fviz_mca_var(
+  ile_mca,
+  axes = c(1,3),
+  geom = c("point", "text") ,     
+  pointsize = 1,
+  labelsize = 2
+)
+
+mcabp2 <- fviz_mca_biplot(
+  axes = c(1,3),
+  ile_mca,
+  geom = "point",
+  pointsize = 1,
+  habillage = color_var
+)
+
+mcav3 <- fviz_mca_var(
+  ile_mca,
+  axes = c(2,3),
+  geom = c("point", "text") ,     
+  pointsize = 1,
+  labelsize = 2
+)
+
+mcabp3 <- fviz_mca_biplot(
+  axes = c(2,3),
+  ile_mca,
+  geom = "point",
+  pointsize = 1,
+  habillage = color_var
+)
+
+wrap_plots(mcav1, mcabp1, ncol = 2)
+wrap_plots(mcav2, mcabp2, ncol = 2)
+wrap_plots(mcav3, mcabp3, ncol = 2)
 ```
 
 # 7. Análisis de conglomerados (Clustering)

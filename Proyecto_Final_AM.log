@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.5.17)  3 JUN 2026 17:35
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.6.4)  4 JUN 2026 17:35
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -888,38 +888,48 @@ File: Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk
 <use Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-12-1.pdf>
 Package pdftex.def Info: Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-12-1.pdf  used on input line 657.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-<Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-13-1.pdf, id=94, 469.755pt x 325.215pt>
-File: Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-13-1.pdf Graphic file (type pdf)
-<use Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-13-1.pdf>
-Package pdftex.def Info: Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-13-1.pdf  used on input line 658.
+<Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-12-2.pdf, id=94, 469.755pt x 325.215pt>
+File: Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-12-2.pdf Graphic file (type pdf)
+<use Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-12-2.pdf>
+Package pdftex.def Info: Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-12-2.pdf  used on input line 658.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-12-3.pdf, id=95, 469.755pt x 325.215pt>
+File: Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-12-3.pdf Graphic file (type pdf)
+<use Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-12-3.pdf>
+Package pdftex.def Info: Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-12-3.pdf  used on input line 659.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 657--659
+Underfull \hbox (badness 10000) in paragraph at lines 657--660
+[]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 657--660
 []
  []
 
 [9{c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc} <./Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-11-1.pdf>]
 Overfull \vbox (26.30103pt too high) has occurred while \output is active []
 
-[10 <./Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-12-1.pdf> <./Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-13-1.pdf>] [11] (./Proyecto_Final_AM.aux)
+[10 <./Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-12-1.pdf> <./Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-12-2.pdf>] [11 <./Proyecto_Final_AM_files/Proyecto_Final_AM_files/figure-latex/unnamed-chunk-12-3.pdf>] [12] (./Proyecto_Final_AM.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-04-28>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 15148 strings out of 469331
- 246026 string characters out of 5464601
- 717831 words of memory out of 5000000
- 43595 multiletter control sequences out of 15000+600000
+ 15156 strings out of 469331
+ 246699 string characters out of 5464602
+ 717842 words of memory out of 5000000
+ 43602 multiletter control sequences out of 15000+600000
  683023 words of font info for 131 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 83i,8n,93p,1014b,606s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 83i,8n,93p,1014b,675s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx10.pfb><c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi10.pfb><c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr17.pfb><c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb><c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><c:/Users/nicod/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb>
-Output written on Proyecto_Final_AM.pdf (11 pages, 7265249 bytes).
+Output written on Proyecto_Final_AM.pdf (12 pages, 8677056 bytes).
 PDF statistics:
- 223 PDF objects out of 1000 (max. 8388607)
- 164 compressed objects within 2 object streams
- 28 named destinations out of 1000 (max. 500000)
- 30852 words of extra memory for PDF output out of 35830 (max. 10000000)
+ 233 PDF objects out of 1000 (max. 8388607)
+ 171 compressed objects within 2 object streams
+ 29 named destinations out of 1000 (max. 500000)
+ 30857 words of extra memory for PDF output out of 35830 (max. 10000000)
 
